@@ -4,7 +4,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
 test('users can register', function () {
-    $response = $this->postJson('/register', [
+    $response = $this->postJson('/api/v1/register', [
         'name' => 'Test User',
         'email' => 'test@example.com',
         'password' => 'password',
@@ -17,7 +17,7 @@ test('users can register', function () {
 });
 
 test('registration requires valid data', function () {
-    $response = $this->postJson('/register', [
+    $response = $this->postJson('/api/v1/register', [
         'name' => '',
         'email' => 'not-an-email',
         'password' => 'short',
@@ -34,7 +34,7 @@ test('users can authenticate', function () {
         'password' => Hash::make('password'),
     ]);
 
-    $response = $this->postJson('/login', [
+    $response = $this->postJson('/api/v1/login', [
         'email' => $user->email,
         'password' => 'password',
     ]);
@@ -48,7 +48,7 @@ test('users cannot authenticate with invalid password', function () {
         'password' => Hash::make('password'),
     ]);
 
-    $response = $this->postJson('/login', [
+    $response = $this->postJson('/api/v1/login', [
         'email' => $user->email,
         'password' => 'wrong-password',
     ]);
@@ -62,7 +62,7 @@ test('users can authenticate with remember me', function () {
         'password' => Hash::make('password'),
     ]);
 
-    $response = $this->postJson('/login', [
+    $response = $this->postJson('/api/v1/login', [
         'email' => $user->email,
         'password' => 'password',
         'remember' => true,
@@ -78,7 +78,7 @@ test('users can logout', function () {
 
     $this->actingAs($user);
 
-    $response = $this->postJson('/logout');
+    $response = $this->postJson('/api/v1/logout');
 
     $response->assertSuccessful();
     $this->assertGuest();

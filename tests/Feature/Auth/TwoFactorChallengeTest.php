@@ -13,7 +13,7 @@ test('login returns a two-factor challenge payload when required', function () {
         'password' => Hash::make('password'),
     ]);
 
-    $this->postJson('/login', [
+    $this->postJson('/api/v1/login', [
         'email' => $user->email,
         'password' => 'password',
     ])
@@ -28,7 +28,7 @@ test('two-factor challenge spa shell is available during challenge', function ()
         'password' => Hash::make('password'),
     ]);
 
-    $this->postJson('/login', [
+    $this->postJson('/api/v1/login', [
         'email' => $user->email,
         'password' => 'password',
     ])->assertOk();
@@ -48,12 +48,12 @@ test('invalid authenticator codes are rejected', function () {
         'password' => Hash::make('password'),
     ]);
 
-    $this->postJson('/login', [
+    $this->postJson('/api/v1/login', [
         'email' => $user->email,
         'password' => 'password',
     ])->assertOk();
 
-    $this->postJson('/two-factor-challenge', [
+    $this->postJson('/api/v1/two-factor-challenge', [
         'code' => '000000',
     ])->assertUnprocessable();
 
@@ -65,12 +65,12 @@ test('invalid recovery codes are rejected', function () {
         'password' => Hash::make('password'),
     ]);
 
-    $this->postJson('/login', [
+    $this->postJson('/api/v1/login', [
         'email' => $user->email,
         'password' => 'password',
     ])->assertOk();
 
-    $this->postJson('/two-factor-challenge', [
+    $this->postJson('/api/v1/two-factor-challenge', [
         'recovery_code' => 'invalid-code',
     ])->assertUnprocessable();
 
@@ -82,12 +82,12 @@ test('valid recovery codes complete authentication', function () {
         'password' => Hash::make('password'),
     ]);
 
-    $this->postJson('/login', [
+    $this->postJson('/api/v1/login', [
         'email' => $user->email,
         'password' => 'password',
     ])->assertOk();
 
-    $this->postJson('/two-factor-challenge', [
+    $this->postJson('/api/v1/two-factor-challenge', [
         'recovery_code' => 'recovery-code-1',
     ])->assertSuccessful();
 

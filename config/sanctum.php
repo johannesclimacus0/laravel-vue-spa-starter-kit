@@ -40,6 +40,7 @@ return [
 
     'guard' => ['web'],
 
+    'prefix' => config('app.api_prefix', 'api/v1').'/sanctum',
     /*
     |--------------------------------------------------------------------------
     | Expiration Minutes

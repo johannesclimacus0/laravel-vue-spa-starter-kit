@@ -42,7 +42,7 @@ test('serves confirm-password spa shell for authenticated users', function () {
 test('serves two-factor-challenge spa shell for guests with pending login', function () {
     $user = User::factory()->withTwoFactor()->create();
 
-    $this->postJson('/login', [
+    $this->postJson('/api/v1/login', [
         'email' => $user->email,
         'password' => 'password',
     ])->assertOk();
@@ -65,15 +65,17 @@ test('does not swallow api routes with the spa fallback', function () {
 });
 
 test('does not swallow sanctum csrf cookie route', function () {
-    $response = $this->get('/sanctum/csrf-cookie');
+    $response = $this->get('/api/v1/sanctum/csrf-cookie');
 
     $response->assertNoContent();
 });
 
 test('does not swallow fortify email verification routes', function () {
-    $response = $this->get('/email/verify/1/invalid');
+    $response = $this->get('/api/v1/email/verify/1/invalid');
 
-    $response->assertRedirect(route('login'));
+    $response->assertUnauthorized();
+    $response->assertHeader('content-type', 'application/json');
+    $response->assertDontSee('id="app"', false);
 });
 
 test('health endpoint remains available', function () {

@@ -15,6 +15,7 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
+    'api_prefix' => env('API_PREFIX', 'api/v1'),
     /*
     |--------------------------------------------------------------------------
     | Application Environment

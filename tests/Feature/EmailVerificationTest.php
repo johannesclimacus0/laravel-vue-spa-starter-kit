@@ -80,7 +80,7 @@ test('verification email can be resent', function () {
     $user = User::factory()->unverified()->create();
 
     $response = $this->actingAs($user)
-        ->postJson('/email/verification-notification');
+        ->postJson('/api/v1/email/verification-notification');
 
     $response->assertSuccessful();
     Notification::assertSentTo($user, VerifyEmail::class);

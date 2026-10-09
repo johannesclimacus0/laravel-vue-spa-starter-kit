@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\Settings\ProfileController;
-use App\Http\Controllers\SpaController;
-use App\Http\Controllers\TwoFactorChallengeSpaController;
+use App\Http\Controllers\Api\V1\Settings\DeleteAccountController;
+use App\Http\Controllers\Web\SpaController;
+use App\Http\Controllers\Web\TwoFactorChallengeSpaController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -40,10 +40,12 @@ Route::get('/two-factor-challenge', TwoFactorChallengeSpaController::class)
 | unverified users may delete their own account so they can remove personal
 | data without completing email verification first.
 */
-Route::middleware(['auth'])->group(function (): void {
-    Route::delete('/settings/profile', [ProfileController::class, 'destroy'])
-        ->name('profile.destroy');
-});
+Route::middleware(['auth'])
+    ->prefix(config('app.api_prefix', 'api/v1'))
+    ->group(function (): void {
+        Route::delete('/settings/profile', DeleteAccountController::class)
+            ->name('profile.destroy');
+    });
 
 /*
 |--------------------------------------------------------------------------

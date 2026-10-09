@@ -9,7 +9,7 @@ beforeEach(function () {
 });
 
 test('guests cannot enable two-factor authentication', function () {
-    $this->postJson('/user/two-factor-authentication')->assertUnauthorized();
+    $this->postJson('/api/v1/user/two-factor-authentication')->assertUnauthorized();
 });
 
 test('users can enable two-factor authentication when password is confirmed', function () {
@@ -17,7 +17,7 @@ test('users can enable two-factor authentication when password is confirmed', fu
 
     $this->actingAs($user)
         ->withSession(['auth.password_confirmed_at' => time()])
-        ->postJson('/user/two-factor-authentication')
+        ->postJson('/api/v1/user/two-factor-authentication')
         ->assertSuccessful();
 
     expect($user->refresh()->two_factor_secret)->not->toBeNull()
@@ -28,7 +28,7 @@ test('enabling two-factor requires password confirmation', function () {
     $user = User::factory()->create();
 
     $response = $this->actingAs($user)
-        ->postJson('/user/two-factor-authentication');
+        ->postJson('/api/v1/user/two-factor-authentication');
 
     expect($response->status())->toBeIn([302, 423]);
 });
@@ -38,7 +38,7 @@ test('users can confirm two-factor setup with a valid code', function () {
 
     $this->actingAs($user)
         ->withSession(['auth.password_confirmed_at' => time()])
-        ->postJson('/user/two-factor-authentication')
+        ->postJson('/api/v1/user/two-factor-authentication')
         ->assertSuccessful();
 
     $secret = decrypt($user->refresh()->two_factor_secret);
@@ -46,7 +46,7 @@ test('users can confirm two-factor setup with a valid code', function () {
 
     $this->actingAs($user)
         ->withSession(['auth.password_confirmed_at' => time()])
-        ->postJson('/user/confirmed-two-factor-authentication', [
+        ->postJson('/api/v1/user/confirmed-two-factor-authentication', [
             'code' => $validOtp,
         ])
         ->assertSuccessful();
@@ -59,12 +59,12 @@ test('invalid confirmation codes are rejected', function () {
 
     $this->actingAs($user)
         ->withSession(['auth.password_confirmed_at' => time()])
-        ->postJson('/user/two-factor-authentication')
+        ->postJson('/api/v1/user/two-factor-authentication')
         ->assertSuccessful();
 
     $this->actingAs($user)
         ->withSession(['auth.password_confirmed_at' => time()])
-        ->postJson('/user/confirmed-two-factor-authentication', [
+        ->postJson('/api/v1/user/confirmed-two-factor-authentication', [
             'code' => '000000',
         ])
         ->assertUnprocessable();
@@ -75,18 +75,18 @@ test('users can fetch qr code and secret after enabling two-factor', function ()
 
     $this->actingAs($user)
         ->withSession(['auth.password_confirmed_at' => time()])
-        ->postJson('/user/two-factor-authentication')
+        ->postJson('/api/v1/user/two-factor-authentication')
         ->assertSuccessful();
 
     $this->actingAs($user)
         ->withSession(['auth.password_confirmed_at' => time()])
-        ->getJson('/user/two-factor-qr-code')
+        ->getJson('/api/v1/user/two-factor-qr-code')
         ->assertOk()
         ->assertJsonStructure(['svg', 'url']);
 
     $this->actingAs($user)
         ->withSession(['auth.password_confirmed_at' => time()])
-        ->getJson('/user/two-factor-secret-key')
+        ->getJson('/api/v1/user/two-factor-secret-key')
         ->assertOk()
         ->assertJsonStructure(['secretKey']);
 });
@@ -96,13 +96,13 @@ test('confirmed users can view and regenerate recovery codes', function () {
 
     $this->actingAs($user)
         ->withSession(['auth.password_confirmed_at' => time()])
-        ->getJson('/user/two-factor-recovery-codes')
+        ->getJson('/api/v1/user/two-factor-recovery-codes')
         ->assertOk()
         ->assertJsonIsArray();
 
     $this->actingAs($user)
         ->withSession(['auth.password_confirmed_at' => time()])
-        ->postJson('/user/two-factor-recovery-codes')
+        ->postJson('/api/v1/user/two-factor-recovery-codes')
         ->assertSuccessful();
 });
 
@@ -111,7 +111,7 @@ test('users can disable two-factor authentication', function () {
 
     $this->actingAs($user)
         ->withSession(['auth.password_confirmed_at' => time()])
-        ->deleteJson('/user/two-factor-authentication')
+        ->deleteJson('/api/v1/user/two-factor-authentication')
         ->assertSuccessful();
 
     $user->refresh();
