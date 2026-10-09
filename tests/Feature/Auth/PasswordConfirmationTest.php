@@ -20,7 +20,7 @@ test('users can confirm their password', function () {
     $user = User::factory()->create();
 
     $this->actingAs($user)
-        ->postJson('/user/confirm-password', [
+        ->postJson('/api/v1/user/confirm-password', [
             'password' => 'password',
         ])
         ->assertSuccessful();
@@ -30,7 +30,7 @@ test('password confirmation rejects invalid passwords', function () {
     $user = User::factory()->create();
 
     $this->actingAs($user)
-        ->postJson('/user/confirm-password', [
+        ->postJson('/api/v1/user/confirm-password', [
             'password' => 'wrong-password',
         ])
         ->assertUnprocessable()
@@ -42,7 +42,7 @@ test('confirmed password status endpoint reports confirmation state', function (
 
     $this->actingAs($user)
         ->withSession(['auth.password_confirmed_at' => time()])
-        ->getJson('/user/confirmed-password-status')
+        ->getJson('/api/v1/user/confirmed-password-status')
         ->assertOk()
         ->assertJson(['confirmed' => true]);
 });
@@ -52,6 +52,6 @@ test('password confirmed middleware returns 423 when confirmation has expired', 
 
     $this->actingAs($user)
         ->withSession(['auth.password_confirmed_at' => now()->subYear()->getTimestamp()])
-        ->postJson('/user/two-factor-authentication')
+        ->postJson('/api/v1/user/two-factor-authentication')
         ->assertStatus(423);
 });

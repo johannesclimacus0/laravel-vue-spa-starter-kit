@@ -9,7 +9,7 @@ test('authenticated users can update their password', function () {
     ]);
 
     $this->actingAs($user)
-        ->putJson('/user/password', [
+        ->putJson('/api/v1/user/password', [
             'current_password' => 'password',
             'password' => 'new-password',
             'password_confirmation' => 'new-password',
@@ -25,7 +25,7 @@ test('password update requires the correct current password', function () {
     ]);
 
     $this->actingAs($user)
-        ->putJson('/user/password', [
+        ->putJson('/api/v1/user/password', [
             'current_password' => 'wrong-password',
             'password' => 'new-password',
             'password_confirmation' => 'new-password',
@@ -40,7 +40,7 @@ test('password update validates confirmation', function () {
     ]);
 
     $this->actingAs($user)
-        ->putJson('/user/password', [
+        ->putJson('/api/v1/user/password', [
             'current_password' => 'password',
             'password' => 'new-password',
             'password_confirmation' => 'mismatch',
@@ -50,7 +50,7 @@ test('password update validates confirmation', function () {
 });
 
 test('guests cannot update passwords', function () {
-    $this->putJson('/user/password', [
+    $this->putJson('/api/v1/user/password', [
         'current_password' => 'password',
         'password' => 'new-password',
         'password_confirmation' => 'new-password',

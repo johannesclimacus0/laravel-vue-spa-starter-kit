@@ -11,7 +11,7 @@ test('password reset link can be requested', function () {
 
     $user = User::factory()->create();
 
-    $response = $this->postJson('/forgot-password', [
+    $response = $this->postJson('/api/v1/forgot-password', [
         'email' => $user->email,
     ]);
 
@@ -20,7 +20,7 @@ test('password reset link can be requested', function () {
 });
 
 test('password reset link request validates email', function () {
-    $response = $this->postJson('/forgot-password', [
+    $response = $this->postJson('/api/v1/forgot-password', [
         'email' => 'not-an-email',
     ]);
 
@@ -33,12 +33,12 @@ test('password can be reset with valid token', function () {
 
     $user = User::factory()->create();
 
-    $this->postJson('/forgot-password', [
+    $this->postJson('/api/v1/forgot-password', [
         'email' => $user->email,
     ]);
 
     Notification::assertSentTo($user, ResetPassword::class, function (ResetPassword $notification) use ($user) {
-        $response = $this->postJson('/reset-password', [
+        $response = $this->postJson('/api/v1/reset-password', [
             'token' => $notification->token,
             'email' => $user->email,
             'password' => 'new-password',
@@ -58,7 +58,7 @@ test('password cannot be reset with invalid token', function () {
         'password' => Hash::make('old-password'),
     ]);
 
-    $response = $this->postJson('/reset-password', [
+    $response = $this->postJson('/api/v1/reset-password', [
         'token' => 'invalid-token',
         'email' => $user->email,
         'password' => 'new-password',

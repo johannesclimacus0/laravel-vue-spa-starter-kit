@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Hash;
 test('authenticated users can update their profile', function () {
     $user = User::factory()->create();
 
-    $response = $this->actingAs($user)->putJson('/user/profile-information', [
+    $response = $this->actingAs($user)->putJson('/api/v1/user/profile-information', [
         'name' => 'Updated Name',
         'email' => 'updated@example.com',
     ]);
@@ -24,7 +24,7 @@ test('profile update validation rejects invalid data', function () {
     $user = User::factory()->create();
 
     $this->actingAs($user)
-        ->putJson('/user/profile-information', [
+        ->putJson('/api/v1/user/profile-information', [
             'name' => '',
             'email' => 'not-an-email',
         ])
@@ -35,7 +35,7 @@ test('profile update validation rejects invalid data', function () {
 test('email verification status is unchanged when email is unchanged', function () {
     $user = User::factory()->create();
 
-    $this->actingAs($user)->putJson('/user/profile-information', [
+    $this->actingAs($user)->putJson('/api/v1/user/profile-information', [
         'name' => 'Same Email User',
         'email' => $user->email,
     ])->assertSuccessful();
@@ -44,7 +44,7 @@ test('email verification status is unchanged when email is unchanged', function 
 });
 
 test('guests cannot update profile information', function () {
-    $this->putJson('/user/profile-information', [
+    $this->putJson('/api/v1/user/profile-information', [
         'name' => 'Guest',
         'email' => 'guest@example.com',
     ])->assertUnauthorized();
@@ -55,7 +55,7 @@ test('authenticated verified users can delete their account', function () {
         'password' => Hash::make('password'),
     ]);
 
-    $response = $this->actingAs($user)->deleteJson('/settings/profile', [
+    $response = $this->actingAs($user)->deleteJson('/api/v1/settings/profile', [
         'password' => 'password',
     ]);
 
@@ -70,7 +70,7 @@ test('account deletion requires the correct password', function () {
     ]);
 
     $this->actingAs($user)
-        ->deleteJson('/settings/profile', [
+        ->deleteJson('/api/v1/settings/profile', [
             'password' => 'wrong-password',
         ])
         ->assertUnprocessable()
@@ -80,7 +80,7 @@ test('account deletion requires the correct password', function () {
 });
 
 test('guests cannot delete an account', function () {
-    $this->deleteJson('/settings/profile', [
+    $this->deleteJson('/api/v1/settings/profile', [
         'password' => 'password',
     ])->assertUnauthorized();
 });
@@ -90,7 +90,7 @@ test('unverified users can delete their own account', function () {
         'password' => Hash::make('password'),
     ]);
 
-    $response = $this->actingAs($user)->deleteJson('/settings/profile', [
+    $response = $this->actingAs($user)->deleteJson('/api/v1/settings/profile', [
         'password' => 'password',
     ]);
 
