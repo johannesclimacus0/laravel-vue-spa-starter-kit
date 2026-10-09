@@ -3,6 +3,11 @@ import { initializeTheme } from '@/composables/useAppearance';
 import { configurePasskeysClient } from '@/lib/passkeys';
 import { router } from '@/router';
 import { createApp } from 'vue';
+import { configureEcho } from '@laravel/echo-vue';
+
+configureEcho({
+    broadcaster: 'reverb'
+});
 
 configurePasskeysClient();
 initializeTheme();
