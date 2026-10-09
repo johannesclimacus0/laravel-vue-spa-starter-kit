@@ -16,11 +16,9 @@ class SecurityController extends Controller
     public function __invoke(Request $request): JsonResponse
     {
         $canManageTwoFactor = Features::canManageTwoFactorAuthentication();
-        $canManagePasskeys = Features::canManagePasskeys();
 
         $payload = [
             'canManageTwoFactor' => $canManageTwoFactor,
-            'canManagePasskeys' => $canManagePasskeys,
             'passwordRules' => Password::defaults()->toPasswordRulesString(),
             'twoFactorEnabled' => false,
             'requiresConfirmation' => false,

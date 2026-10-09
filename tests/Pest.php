@@ -32,36 +32,3 @@ pest()->extend(TestCase::class)
 expect()->extend('toBeOne', function () {
     return $this->toBe(1);
 });
-
-/*
-|--------------------------------------------------------------------------
-| Functions
-|--------------------------------------------------------------------------
-|
-| While Pest is very powerful out-of-the-box, you may have some testing code specific to your
-| project that you don't want to repeat in every file. Here you can also expose helpers as
-| global functions to help you to reduce the number of lines of code in your test files.
-|
-*/
-
-use App\Models\User;
-use Illuminate\Support\Str;
-use Laravel\Passkeys\Passkey;
-
-/**
- * Create a passkey record for feature tests.
- *
- * @param  array<string, mixed>  $attributes
- */
-function createPasskeyFor(User $user, array $attributes = []): Passkey
-{
-    /** @var Passkey $passkey */
-    $passkey = $user->passkeys()->create(array_merge([
-        'name' => 'Chrome on Windows',
-        'credential_id' => 'test-'.Str::random(32),
-        'credential' => ['aaguid' => '08987058-cadc-4b81-b6e1-30de50dcbe96'],
-        'last_used_at' => now(),
-    ], $attributes));
-
-    return $passkey;
-}

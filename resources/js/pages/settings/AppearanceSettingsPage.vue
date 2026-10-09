@@ -1,31 +1,19 @@
 <script setup lang="ts">
-import AppearanceTabs from '@/components/AppearanceTabs.vue';
-import DocumentTitle from '@/components/DocumentTitle.vue';
-import Heading from '@/components/Heading.vue';
-import SettingsLayout from '@/layouts/SettingsLayout.vue';
-import type { BreadcrumbItem } from '@/types';
+import { onMounted } from 'vue';
+import SettingsNavigation from '@/components/settings/SettingsNavigation.vue';
+import TimezonePreferenceForm from '@/components/settings/TimezonePreferenceForm.vue';
 
-const breadcrumbs: BreadcrumbItem[] = [
-    {
-        title: 'Appearance settings',
-        href: '/settings/appearance',
-    },
-];
+onMounted(() => {
+    document.title = 'Appearance settings';
+});
 </script>
 
 <template>
-    <SettingsLayout :breadcrumbs="breadcrumbs">
-        <DocumentTitle title="Appearance settings" />
-
-        <h1 class="sr-only">Appearance settings</h1>
-
-        <div class="space-y-6">
-            <Heading
-                variant="small"
-                title="Appearance settings"
-                description="Update the appearance settings for your account"
-            />
-            <AppearanceTabs />
-        </div>
-    </SettingsLayout>
+    <main class="mx-auto max-w-3xl space-y-8 px-4 py-8">
+        <header>
+            <h1 class="text-2xl font-semibold">Settings</h1>
+            <SettingsNavigation current-page="appearance" />
+        </header>
+        <TimezonePreferenceForm />
+    </main>
 </template>
