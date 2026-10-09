@@ -100,6 +100,7 @@ export default defineConfig({
             'composer.json',
             'resources/js/components/ui/*',
             'resources/views/mail/*',
+            'resources/js/router/index.ts',
         ],
         sortTailwindcss: {
             functions: ['clsx', 'cn', 'cva'],

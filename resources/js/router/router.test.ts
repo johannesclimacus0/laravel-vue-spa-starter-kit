@@ -2,7 +2,7 @@ import { router } from '@/router';
 import { describe, expect, it } from 'vitest';
 
 describe('vue router architecture', () => {
-    it('registers core spa routes without lazy/async components', () => {
+    it('registers core spa routes with lazy pages and eager wrappers', () => {
         const names = router.getRoutes().map((route) => route.name);
 
         expect(names).toContain('home');
@@ -19,7 +19,9 @@ describe('vue router architecture', () => {
             }
 
             for (const component of Object.values(route.components)) {
-                expect(typeof component).not.toBe('function');
+                expect(typeof component).toBe(
+                    route.name ? 'function' : 'object',
+                );
             }
         }
     });
