@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\V1\CurrentUserController;
-use App\Http\Controllers\Api\V1\Settings\PasskeySettingsController;
+use App\Http\Controllers\Api\V1\Settings\PreferencesController;
 use App\Http\Controllers\Api\V1\Settings\SecurityController;
 use Illuminate\Support\Facades\Route;
 
@@ -13,8 +13,12 @@ Route::prefix('v1')->group(function (): void {
             ->middleware('verified')
             ->name('api.v1.settings.security');
 
-        Route::get('/settings/passkeys', PasskeySettingsController::class)
+        Route::get('/settings/preferences', [PreferencesController::class, 'show'])
             ->middleware('verified')
-            ->name('api.v1.settings.passkeys');
+            ->name('api.v1.settings.preferences.show');
+
+        Route::put('/settings/preferences', [PreferencesController::class, 'update'])
+            ->middleware('verified')
+            ->name('api.v1.settings.preferences.update');
     });
 });

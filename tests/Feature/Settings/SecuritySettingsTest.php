@@ -1,6 +1,11 @@
 <?php
 
 use App\Models\User;
+use Illuminate\Support\Facades\Schema;
+
+test('passkey storage is removed', function () {
+    expect(Schema::hasTable('passkeys'))->toBeFalse();
+});
 
 test('authenticated verified users can fetch security settings', function () {
     $user = User::factory()->create();
@@ -9,11 +14,10 @@ test('authenticated verified users can fetch security settings', function () {
         ->getJson('/api/v1/settings/security')
         ->assertOk()
         ->assertJsonPath('data.canManageTwoFactor', true)
-        ->assertJsonPath('data.canManagePasskeys', true)
         ->assertJsonPath('data.twoFactorEnabled', false)
         ->assertJsonPath('data.requiresConfirmation', true)
         ->assertJsonStructure(['data' => ['passwordRules']])
-        ->assertJsonMissingPath('data.passkeys');
+        ->assertJsonMissingPath('data.canManagePasskeys');
 });
 
 test('security settings report enabled two-factor status', function () {

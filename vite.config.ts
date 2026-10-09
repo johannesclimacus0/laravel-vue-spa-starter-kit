@@ -1,10 +1,8 @@
-import { wayfinder } from '@laravel/vite-plugin-wayfinder';
 import tailwindcss from '@tailwindcss/vite';
 import vue from '@vitejs/plugin-vue';
 import laravel from 'laravel-vite-plugin';
-import { bunny } from 'laravel-vite-plugin/fonts';
 import { defineConfig, lazyPlugins } from 'vite-plus';
-
+import { wayfinder } from '@laravel/vite-plugin-wayfinder';
 /*
  * Vitest (vp test) resolves this Vite config with a non-build command so it can
  * transform modules. laravel-vite-plugin treats that like the HMR server and
@@ -32,14 +30,10 @@ function vitestNodeExecArgv(): string[] {
 
 export default defineConfig({
     plugins: lazyPlugins(() => [
+        wayfinder(),
         laravel({
             input: ['resources/css/app.css', 'resources/js/app.ts'],
             refresh: true,
-            fonts: [
-                bunny('Instrument Sans', {
-                    weights: [400, 500, 600],
-                }),
-            ],
         }),
         tailwindcss(),
         vue({
@@ -50,15 +44,12 @@ export default defineConfig({
                 },
             },
         }),
-        wayfinder({
-            formVariants: true,
-        }),
     ]),
     test: {
         environment: 'jsdom',
         execArgv: vitestNodeExecArgv(),
-        setupFiles: ['resources/js/testing/setup.ts'],
-        include: ['resources/js/**/*.{test,spec}.{ts,tsx,vue}'],
+        setupFiles: ['resources/js/tests/helpers/setup.ts'],
+        include: ['resources/js/tests/**/*.{test,spec}.{ts,tsx,vue}'],
     },
     server: {
         watch: {
@@ -78,10 +69,6 @@ export default defineConfig({
             'public/**',
             'bootstrap/ssr/**',
             'tailwind.config.js',
-            'resources/js/actions/**',
-            'resources/js/components/ui/*',
-            'resources/js/routes/**',
-            'resources/js/wayfinder/**',
         ],
         options: {
             denyWarnings: true,
@@ -98,12 +85,10 @@ export default defineConfig({
         ignorePatterns: [
             '.github/**',
             'composer.json',
-            'resources/js/components/ui/*',
             'resources/views/mail/*',
             'resources/js/router/index.ts',
         ],
         sortTailwindcss: {
-            functions: ['clsx', 'cn', 'cva'],
             entryPoint: 'resources/css/app.css',
         },
     },

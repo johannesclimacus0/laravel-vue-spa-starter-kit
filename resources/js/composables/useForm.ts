@@ -2,11 +2,10 @@ import {
     ensureCsrfCookie,
     isNormalizedApiError,
     normalizeApiError,
-} from '@/lib/http';
+} from '@/http/http';
 import type { LaravelValidationErrors } from '@/types/http';
+import type { FormErrors, FormState } from '@/types/forms';
 import { reactive } from 'vue';
-
-type FormErrors = Record<string, string>;
 
 function firstErrorMessages(errors: LaravelValidationErrors): FormErrors {
     return Object.fromEntries(
@@ -16,23 +15,6 @@ function firstErrorMessages(errors: LaravelValidationErrors): FormErrors {
         ]),
     );
 }
-
-export type FormState<T extends Record<string, unknown>> = {
-    data: T;
-    errors: FormErrors;
-    processing: boolean;
-    status: string | null;
-    formError: string | null;
-    hasErrors: boolean;
-    setField: <K extends keyof T>(key: K, value: T[K]) => void;
-    clearErrors: () => void;
-    reset: (...fields: Array<keyof T>) => void;
-    setStatus: (value: string | null) => void;
-    setFormError: (value: string | null) => void;
-    submit: (
-        action: (formData: T) => Promise<void | string | null>,
-    ) => Promise<void>;
-};
 
 export function useForm<T extends Record<string, unknown>>(
     initial: T,

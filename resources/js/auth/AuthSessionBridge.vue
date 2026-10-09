@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { useAuth } from '@/auth/use-auth';
+import { useAuthStore } from '@/stores/auth/index';
 import {
     configureAuthSessionHandlers,
     setAuthSessionHandlersSuppressed,
-} from '@/lib/http';
+} from '@/http/http';
 import { getSafeInternalPath, locationToPath } from '@/lib/navigation';
 import { onMounted, onUnmounted, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
@@ -26,16 +26,19 @@ function isGuestAuthPath(pathname: string): boolean {
  * Bridges Axios session-expiration 401 to auth state + Vue Router.
  * Password-confirmation (423) is handled contextually by sensitive callers.
  */
-const { status, setUser } = useAuth();
+const auth = useAuthStore();
 const router = useRouter();
 const route = useRoute();
 
-let currentStatus = status.value;
+let currentStatus = auth.status;
 let currentPath = locationToPath(route);
 
-watch(status, (value) => {
-    currentStatus = value;
-});
+watch(
+    () => auth.status,
+    (value) => {
+        currentStatus = value;
+    },
+);
 
 watch(
     () => locationToPath(route),
@@ -51,7 +54,7 @@ onMounted(() => {
                 return;
             }
 
-            setUser(null);
+            auth.setUser(null);
 
             const pathname = currentPath.split('?')[0] ?? currentPath;
 

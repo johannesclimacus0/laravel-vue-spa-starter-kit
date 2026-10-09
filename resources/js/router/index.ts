@@ -1,13 +1,13 @@
-import AppShell from '@/router/AppShell.vue';
-import GuestRoute from '@/router/GuestRoute.vue';
-import ProtectedRoute from '@/router/ProtectedRoute.vue';
-import VerifiedRoute from '@/router/VerifiedRoute.vue';
+import AppShell from '@/layouts/AppShell.vue';
+import GuestRoute from '@/router/auth/GuestRoute.vue';
+import ProtectedRoute from '@/router/auth/ProtectedRoute.vue';
+import VerifiedRoute from '@/router/auth/VerifiedRoute.vue';
 import { createRouter, createWebHistory } from 'vue-router';
 
 const routes = [
     { path: '/', component: AppShell,
         children: [
-            { path: '', name: 'home', component: () => import('@/pages/WelcomePage.vue') },
+            { path: '', redirect: '/login' },
             { path: '', component: GuestRoute,
                 children: [
                     { path: 'login', name: 'login', component: () => import('@/pages/auth/LoginPage.vue') },
