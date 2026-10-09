@@ -72,6 +72,26 @@ services:
             - '${FORWARD_MAILPIT_DASHBOARD_PORT:-8025}:8025'
         networks:
             - sail
+    horizon:
+        build:
+            context: './vendor/laravel/sail/runtimes/8.5'
+            dockerfile: Dockerfile
+            args:
+                WWWGROUP: '${WWWGROUP}'
+        image: 'sail-8.5/app'
+        environment:
+            WWWUSER: '${WWWUSER}'
+            LARAVEL_SAIL: 1
+        volumes:
+            -   '.:/var/www/html'
+        networks:
+            - sail
+        depends_on:
+            redis:
+                condition: service_healthy
+            pgsql:
+                condition: service_healthy
+        command: php artisan horizon
 networks:
     sail:
         driver: bridge
