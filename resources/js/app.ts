@@ -6,7 +6,7 @@ import { createApp } from 'vue';
 import { configureEcho } from '@laravel/echo-vue';
 
 configureEcho({
-    broadcaster: 'reverb'
+    broadcaster: 'reverb',
 });
 
 configurePasskeysClient();

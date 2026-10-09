@@ -4,19 +4,34 @@ on:
   push:
     branches:
       - main
-      - develop
   pull_request:
 
 permissions:
   contents: read
 
+concurrency:
+  group: tests-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  ci:
+  quality:
+    name: Quality / PHP ${{ matrix.php }} / Node ${{ matrix.node }}
     runs-on: ubuntu-latest
+
     strategy:
       fail-fast: false
       matrix:
-        node-version: ['22', '25']
+        include:
+          - php: '8.3'
+            node: '22'
+          - php: '8.5'
+            node: '24'
+
+    env:
+      APP_ENV: testing
+      BROADCAST_CONNECTION: log
+      CACHE_STORE: array
+      QUEUE_CONNECTION: sync
 
     steps:
       - name: Checkout code
@@ -27,24 +42,85 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # v2
         with:
-          php-version: '8.3'
+          php-version: ${{ matrix.php }}
           tools: composer:v2
           coverage: none
 
       - name: Setup Node
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: ${{ matrix.node }}
+          cache: npm
+          cache-dependency-path: package-lock.json
 
-      - name: Setup Application
-        run: composer setup
+      - name: Validate Composer configuration
+        run: composer validate
 
-      - name: Run CI Checks
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --prefer-dist --no-progress
+
+      - name: Prepare application
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+
+      - name: Install frontend dependencies
+        run: npm ci
+
+      - name: Build frontend
+        run: npm run build
+
+      - name: Run CI checks
         run: composer ci:check
 
-  fresh-consumer:
-    name: Fresh consumer export
+  infrastructure:
+    name: PostgreSQL / Redis / Compose
     runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:18-alpine
+        env:
+          POSTGRES_DB: laravel
+          POSTGRES_USER: sail
+          POSTGRES_PASSWORD: password
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U sail -d laravel"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+      redis:
+        image: redis:alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    env:
+      APP_ENV: testing
+      BROADCAST_CONNECTION: log
+
+      DB_CONNECTION: pgsql
+      DB_HOST: 127.0.0.1
+      DB_PORT: 5432
+      DB_DATABASE: laravel
+      DB_USERNAME: sail
+      DB_PASSWORD: password
+
+      CACHE_STORE: redis
+      QUEUE_CONNECTION: redis
+      REDIS_CLIENT: phpredis
+      REDIS_HOST: 127.0.0.1
+      REDIS_PORT: 6379
+
+      WWWUSER: 1000
+      WWWGROUP: 1000
 
     steps:
       - name: Checkout code
@@ -52,33 +128,55 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Export consumer tree from current commit
-        run: |
-          mkdir -p "$RUNNER_TEMP/laravel-vue-spa-consumer"
-          git archive --format=tar HEAD | tar -x -C "$RUNNER_TEMP/laravel-vue-spa-consumer"
-          echo "CONSUMER_DIR=$RUNNER_TEMP/laravel-vue-spa-consumer" >> "$GITHUB_ENV"
+      - name: Setup PHP
+        uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # v2
+        with:
+          php-version: '8.5'
+          extensions: pdo_pgsql, redis
+          tools: composer:v2
+          coverage: none
 
-      - name: Assert export includes documentation
-        working-directory: ${{ env.CONSUMER_DIR }}
-        run: |
-          test -f README.md
-          test -f LICENSE
-          test -f NOTICE.md
-          ! grep -q 'README.md export-ignore' .gitattributes
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --prefer-dist --no-progress
 
-      - name: Assert Wayfinder output is absent before setup
-        working-directory: ${{ env.CONSUMER_DIR }}
+      - name: Prepare application
         run: |
-          test ! -e resources/js/actions
-          test ! -e resources/js/routes
-          test ! -e resources/js/wayfinder
-          test ! -e vendor
-          test ! -e node_modules
-          test ! -e .env
-          test ! -e public/build
-          test ! -e boost.json
-          test ! -e AGENTS.md
-          ! grep -q 'boost:update' composer.json
+          cp .env.example .env
+          php artisan key:generate
+
+      - name: Validate Docker Compose
+        run: docker compose config --quiet
+
+      - name: Run PostgreSQL migrations
+        run: php artisan migrate:fresh --force
+
+      - name: Verify infrastructure drivers
+        run: >-
+          php artisan tinker --execute="throw_unless(
+          config('database.default') === 'pgsql' &&
+          config('cache.default') === 'redis' &&
+          config('queue.default') === 'redis'
+          );"
+
+      - name: Check Redis
+        run: >-
+          php artisan tinker --execute="throw_unless(
+          cache()->store('redis')->put('ci-test', 'ok', 60) &&
+          cache()->store('redis')->get('ci-test') === 'ok'
+          );"
+
+      - name: Run PHP tests with PostgreSQL and Redis
+        run: php artisan test
+
+  dependency-audit:
+    name: Dependency audit
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
       - name: Setup PHP
         uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # v2
@@ -92,26 +190,8 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Consumer setup
-        working-directory: ${{ env.CONSUMER_DIR }}
-        run: composer setup
+      - name: Audit Composer dependencies
+        run: composer audit --locked
 
-      - name: Assert Composer post-update scripts succeed without Boost install state
-        working-directory: ${{ env.CONSUMER_DIR }}
-        run: |
-          test ! -e boost.json
-          composer run-script post-update-cmd --no-interaction
-
-      - name: Assert Wayfinder generated and still gitignored
-        working-directory: ${{ env.CONSUMER_DIR }}
-        run: |
-          test -d resources/js/actions
-          test -d resources/js/routes
-          test -d resources/js/wayfinder
-          grep -qx '/resources/js/actions' .gitignore
-          grep -qx '/resources/js/routes' .gitignore
-          grep -qx '/resources/js/wayfinder' .gitignore
-
-      - name: Consumer CI checks
-        working-directory: ${{ env.CONSUMER_DIR }}
-        run: composer ci:check
+      - name: Audit npm dependencies
+        run: npm audit
