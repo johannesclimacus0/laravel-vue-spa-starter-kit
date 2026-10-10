@@ -7,7 +7,7 @@ This repository is a fork of [muradyanvano/laravel-vue-spa-starter-kit](https://
 ## Start a new project
 
 ```bash
-git clone --depth=1 https://github.com/johannesclimacus0/laravel-vue-spa-starter-kit.git appname
+git clone https://github.com/johannesclimacus0/laravel-vue-spa-starter-kit.git appname
 cd appname
 git remote remove origin
 ```
