@@ -57,7 +57,7 @@ describe('frontend public types', () => {
             passwordRules: string;
         }>();
         expectTypeOf<SettingsPageKey>().toEqualTypeOf<
-            'profile' | 'security' | 'appearance'
+            'profile' | 'security' | 'preferences'
         >();
         expectTypeOf<MaybeWrapped<User>>().toEqualTypeOf<
             User | { data: User }

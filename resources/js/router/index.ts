@@ -29,7 +29,7 @@ const routes = [
                     { path: 'settings', redirect: '/settings/profile' },
                     { path: 'settings/profile', name: 'settings.profile', component: () => import('@/pages/settings/ProfileSettingsPage.vue') },
                     { path: 'settings/security', name: 'settings.security', component: () => import('@/pages/settings/SecuritySettingsPage.vue') },
-                    { path: 'settings/appearance', name: 'settings.appearance', component: () => import('@/pages/settings/AppearanceSettingsPage.vue') },
+                    { path: 'settings/preferences', name: 'settings.preferences', component: () => import('@/pages/settings/PreferencesSettingsPage.vue') },
                     { path: 'settings/password', redirect: '/settings/security' },
                     { path: 'settings/two-factor', redirect: '/settings/security' },
                 ]

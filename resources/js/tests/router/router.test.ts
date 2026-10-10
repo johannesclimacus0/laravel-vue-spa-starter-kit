@@ -11,7 +11,7 @@ describe('vue router architecture', () => {
         expect(names).toContain('register');
         expect(names).toContain('settings.profile');
         expect(names).toContain('settings.security');
-        expect(names).toContain('settings.appearance');
+        expect(names).toContain('settings.preferences');
 
         for (const route of router.getRoutes()) {
             if (!route.components) {

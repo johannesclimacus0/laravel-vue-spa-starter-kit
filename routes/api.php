@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\Api\V1\CurrentUserController;
-use App\Http\Controllers\Api\V1\Settings\PreferencesController;
-use App\Http\Controllers\Api\V1\Settings\SecurityController;
+use App\Http\Controllers\Api\CurrentUserController;
+use App\Http\Controllers\Api\Settings\PreferencesController;
+use App\Http\Controllers\Api\Settings\SecurityController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->group(function (): void {

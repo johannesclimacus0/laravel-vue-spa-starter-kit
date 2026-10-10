@@ -70,8 +70,15 @@ jobs:
       - name: Build frontend
         run: npm run build
 
-      - name: Run CI checks
-        run: composer ci:check
+      - name: Run frontend checks
+        run: |
+          npm run check
+          npm run types:check
+          npm run test
+
+      - name: Run PHP checks
+        if: matrix.node == '22'
+        run: composer test
 
   infrastructure:
     name: PostgreSQL / Redis / Compose
