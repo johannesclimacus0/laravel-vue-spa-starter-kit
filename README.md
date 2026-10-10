@@ -6,16 +6,27 @@ This repository is a fork of [muradyanvano/laravel-vue-spa-starter-kit](https://
 
 ## Start a new project
 
-```bash
-git clone https://github.com/johannesclimacus0/laravel-vue-spa-starter-kit.git appname
-cd appname
-git remote rename origin source
-git remote add origin git@github.com:YOUR_USERNAME/my-app.git
+### Option 1: Use the template
 
-git switch --orphan clean-main
-git restore --source=source/main --staged --worktree .
-git commit -m "Initial commit"
-git push -u origin clean-main:main
+1. Click **Use this template → Create a new repository** on this repository's GitHub page.
+2. Choose a name for your project and create the repository.
+3. Clone your new repository:
+
+```bash
+git clone https://github.com/YOUR_USERNAME/YOUR_PROJECT.git
+cd YOUR_PROJECT
+```
+
+Your project starts with one commit containing the starter files.
+
+### Option 2: Clone with full history
+
+```bash
+git clone https://github.com/johannesclimacus0/laravel-vue-spa-starter-kit.git YOUR_PROJECT
+cd YOUR_PROJECT
+git remote remove origin
+git remote add origin https://github.com/YOUR_USERNAME/YOUR_PROJECT.git
+git push -u origin main
 ```
 
 ### Requirements
