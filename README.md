@@ -47,4 +47,4 @@ The Sail stack includes PostgreSQL, Redis, Mailpit, Horizon, Reverb, and a sched
 
 ## Credits
 
-Based on [muradyanvano/laravel-vue-spa-starter-kit](https://github.com/muradyanvano/laravel-vue-spa-starter-kit).   
+Based on [muradyanvano/laravel-vue-spa-starter-kit](https://github.com/muradyanvano/laravel-vue-spa-starter-kit).
