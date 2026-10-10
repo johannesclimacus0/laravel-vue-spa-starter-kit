@@ -24,7 +24,7 @@ test('serves the spa shell for frontend routes on direct refresh', function (str
     '/reset-password/example-token',
     '/settings/profile',
     '/settings/security',
-    '/settings/appearance',
+    '/settings/preferences',
     '/settings/password',
     '/settings/two-factor',
     '/unknown-spa-path',
@@ -93,7 +93,7 @@ test('serves the spa shell for paths that share a prefix with reserved routes', 
 });
 
 test('unknown api routes return json not the spa shell', function () {
-    $response = $this->getJson('/api/v1/does-not-exist');
+    $response = $this->get('/api/v1/does-not-exist');
 
     $response->assertNotFound();
     $response->assertHeader('content-type', 'application/json');

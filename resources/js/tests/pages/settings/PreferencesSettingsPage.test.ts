@@ -1,7 +1,7 @@
 import { flushPromises, mount } from '@vue/test-utils';
 import { createPinia } from 'pinia';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import AppearanceSettingsPage from '@/pages/settings/AppearanceSettingsPage.vue';
+import PreferencesSettingsPage from '@/pages/settings/PreferencesSettingsPage.vue';
 
 const { fetchPreferences, updatePreferences } = vi.hoisted(() => ({
     fetchPreferences: vi.fn(),
@@ -15,7 +15,7 @@ vi.mock('@/services/settings/SettingsService', () => ({
     },
 }));
 
-describe('AppearanceSettingsPage', () => {
+describe('PreferencesSettingsPage', () => {
     beforeEach(() => {
         fetchPreferences.mockReset();
         updatePreferences.mockReset();
@@ -24,7 +24,7 @@ describe('AppearanceSettingsPage', () => {
     it('loads and displays the current time zone', async () => {
         fetchPreferences.mockResolvedValue({ timezone: 'Australia/Sydney' });
 
-        const wrapper = mount(AppearanceSettingsPage, {
+        const wrapper = mount(PreferencesSettingsPage, {
             global: { plugins: [createPinia()] },
         });
 
@@ -38,7 +38,7 @@ describe('AppearanceSettingsPage', () => {
         fetchPreferences.mockResolvedValue({ timezone: 'Australia/Sydney' });
         updatePreferences.mockResolvedValue({ timezone: 'America/New_York' });
 
-        const wrapper = mount(AppearanceSettingsPage, {
+        const wrapper = mount(PreferencesSettingsPage, {
             global: { plugins: [createPinia()] },
         });
 

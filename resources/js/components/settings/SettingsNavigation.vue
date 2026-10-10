@@ -6,7 +6,7 @@ defineProps<{ currentPage: SettingsPageKey }>();
 const pages: { key: SettingsPageKey; label: string; href: string }[] = [
     { key: 'profile', label: 'Profile', href: '/settings/profile' },
     { key: 'security', label: 'Security', href: '/settings/security' },
-    { key: 'appearance', label: 'Appearance', href: '/settings/appearance' },
+    { key: 'preferences', label: 'Preferences', href: '/settings/preferences' },
 ];
 </script>
 

@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Api\V1\Settings\DeleteAccountController;
+use App\Http\Controllers\Api\Settings\DeleteAccountController;
 use App\Http\Controllers\Web\SpaController;
 use App\Http\Controllers\Web\TwoFactorChallengeSpaController;
 use Illuminate\Support\Facades\Route;
@@ -60,6 +60,8 @@ Route::middleware(['auth'])
 |
 */
 
+$apiPrefix = preg_quote(trim((string) config('app.api_prefix', 'api/v1'), '/'), '/');
+
 Route::get('/{path?}', SpaController::class)
-    ->where('path', '^(?!api(?:/|$)|sanctum(?:/|$)|up$|email(?:/|$)|storage(?:/|$)).*$')
+    ->where('path', '^(?!'.$apiPrefix.'(?:/|$)|sanctum(?:/|$)|up$|email(?:/|$)|storage(?:/|$)).*$')
     ->name('spa');

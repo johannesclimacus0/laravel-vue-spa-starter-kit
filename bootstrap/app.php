@@ -23,6 +23,10 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(
-            fn (Request $request) => $request->is('api/*') || $request->expectsJson(),
+            function (Request $request): bool {
+                $apiPrefix = trim((string) config('app.api_prefix', 'api/v1'), '/');
+
+                return $request->is($apiPrefix, $apiPrefix.'/*') || $request->expectsJson();
+            },
         );
     })->create();

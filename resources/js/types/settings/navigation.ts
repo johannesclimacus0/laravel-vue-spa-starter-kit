@@ -1,1 +1,1 @@
-export type SettingsPageKey = 'profile' | 'security' | 'appearance';
+export type SettingsPageKey = 'profile' | 'security' | 'preferences';

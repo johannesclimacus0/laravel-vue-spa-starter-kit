@@ -31,7 +31,7 @@ export const spaLinkChildPaths = [
     'dashboard',
     'settings/profile',
     'settings/security',
-    'settings/appearance',
+    'settings/preferences',
 ] as const;
 
 /**

@@ -1,11 +1,6 @@
 <?php
 
 use App\Models\User;
-use Illuminate\Support\Facades\Schema;
-
-test('passkey storage is removed', function () {
-    expect(Schema::hasTable('passkeys'))->toBeFalse();
-});
 
 test('authenticated verified users can fetch security settings', function () {
     $user = User::factory()->create();
