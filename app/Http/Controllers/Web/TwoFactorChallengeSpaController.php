@@ -18,6 +18,6 @@ class TwoFactorChallengeSpaController extends Controller
             return redirect()->route('login');
         }
 
-        return view('app');
+        return view('app' );
     }
 }
