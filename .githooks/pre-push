@@ -4,7 +4,7 @@ set -euo pipefail
 cd "$(git rev-parse --show-toplevel)"
 
 echo "fixing php formatting:"
-composer lint:test
+composer lint:check
 
 echo "fixing frontend formatting:"
 npm run check
