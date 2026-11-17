@@ -4,10 +4,10 @@ set -euo pipefail
 cd "$(git rev-parse --show-toplevel)"
 
 echo "fixing php formatting:"
-composer lint
+composer lint:test
 
 echo "fixing frontend formatting:"
-npm run check:fix
+npm run check
 
 echo "validating composer:"
 composer validate --strict
