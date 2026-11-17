@@ -3,9 +3,7 @@ import { getSafeInternalPath } from '@/lib/navigation';
 import type { Router } from 'vue-router';
 
 function isPasswordConfirmationRequired(error: unknown): boolean {
-    const normalized = isNormalizedApiError(error)
-        ? error
-        : normalizeApiError(error);
+    const normalized = isNormalizedApiError(error) ? error : normalizeApiError(error);
 
     return normalized.kind === 'password_confirmation';
 }

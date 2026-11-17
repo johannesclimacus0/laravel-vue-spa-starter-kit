@@ -1,14 +1,10 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it } from 'vite-plus/test';
 import { getPostAuthPath, getSafeInternalPath } from '@/lib/navigation';
 
 describe('getSafeInternalPath', () => {
     it('accepts internal spa paths', () => {
-        expect(getSafeInternalPath('/settings/profile')).toBe(
-            '/settings/profile',
-        );
-        expect(getSafeInternalPath('/dashboard?tab=1')).toBe(
-            '/dashboard?tab=1',
-        );
+        expect(getSafeInternalPath('/settings/profile')).toBe('/settings/profile');
+        expect(getSafeInternalPath('/dashboard?tab=1')).toBe('/dashboard?tab=1');
     });
 
     it('rejects open redirect candidates', () => {

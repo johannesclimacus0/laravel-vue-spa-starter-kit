@@ -10,15 +10,10 @@ import AuthSubmitButton from '@/components/auth/AuthSubmitButton.vue';
         v-if="props.form.status === 'verification-link-sent'"
         class="mb-4 text-center text-sm font-medium text-green-600"
     >
-        A new verification link has been sent to the email address you provided
-        during registration.
+        A new verification link has been sent to the email address you provided during registration.
     </div>
 
-    <p
-        v-if="props.form.formError"
-        class="mb-4 text-center text-sm text-red-600"
-        role="alert"
-    >
+    <p v-if="props.form.formError" class="mb-4 text-center text-sm text-red-600" role="alert">
         {{ props.form.formError }}
     </p>
 

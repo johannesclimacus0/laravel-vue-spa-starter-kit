@@ -1,24 +1,15 @@
-import {
-    ensureCsrfCookie,
-    isNormalizedApiError,
-    normalizeApiError,
-} from '@/http/http';
+import { ensureCsrfCookie, isNormalizedApiError, normalizeApiError } from '@/http/http';
 import type { LaravelValidationErrors } from '@/types/http';
 import type { FormErrors, FormState } from '@/types/forms';
 import { reactive } from 'vue';
 
 function firstErrorMessages(errors: LaravelValidationErrors): FormErrors {
     return Object.fromEntries(
-        Object.entries(errors).map(([field, messages]) => [
-            field,
-            messages[0] ?? '',
-        ]),
+        Object.entries(errors).map(([field, messages]) => [field, messages[0] ?? '']),
     );
 }
 
-export function useForm<T extends Record<string, unknown>>(
-    initial: T,
-): FormState<T> {
+export function useForm<T extends Record<string, unknown>>(initial: T): FormState<T> {
     const form = reactive({
         data: { ...initial } as T,
         errors: {} as FormErrors,
@@ -26,9 +17,7 @@ export function useForm<T extends Record<string, unknown>>(
         status: null as string | null,
         formError: null as string | null,
         get hasErrors() {
-            return (
-                Object.keys(form.errors).length > 0 || form.formError !== null
-            );
+            return Object.keys(form.errors).length > 0 || form.formError !== null;
         },
         setField<K extends keyof T>(key: K, value: T[K]): void {
             form.data[key] = value;
@@ -54,9 +43,7 @@ export function useForm<T extends Record<string, unknown>>(
         setFormError(value: string | null): void {
             form.formError = value;
         },
-        async submit(
-            action: (formData: T) => Promise<void | string | null>,
-        ): Promise<void> {
+        async submit(action: (formData: T) => Promise<void | string | null>): Promise<void> {
             if (form.processing) {
                 return;
             }
@@ -72,9 +59,7 @@ export function useForm<T extends Record<string, unknown>>(
                     form.status = result;
                 }
             } catch (error) {
-                const normalized = isNormalizedApiError(error)
-                    ? error
-                    : normalizeApiError(error);
+                const normalized = isNormalizedApiError(error) ? error : normalizeApiError(error);
 
                 if (normalized.kind === 'csrf') {
                     try {
@@ -105,9 +90,6 @@ export function fieldErrorId(field: string): string {
     return `${field}-error`;
 }
 
-export function fieldDescribedBy(
-    field: string,
-    errors: FormErrors,
-): string | undefined {
+export function fieldDescribedBy(field: string, errors: FormErrors): string | undefined {
     return errors[field] ? fieldErrorId(field) : undefined;
 }

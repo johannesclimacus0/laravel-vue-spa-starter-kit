@@ -1,20 +1,10 @@
-import { describe, expectTypeOf, it } from 'vitest';
+import { describe, expectTypeOf, it } from 'vite-plus/test';
 import type { AuthStatus, User } from '@/types/auth/index';
-import type {
-    AuthStatusResponse,
-    LoginResult,
-    UserResponse,
-} from '@/types/auth/service';
+import type { AuthStatusResponse, LoginResult, UserResponse } from '@/types/auth/service';
 import type { PasswordConfirmationStatus } from '@/types/auth/session';
-import type {
-    TwoFactorConfigContent,
-    TwoFactorQrCode,
-} from '@/types/auth/two-factor';
+import type { TwoFactorConfigContent, TwoFactorQrCode } from '@/types/auth/two-factor';
 import type { FormErrors, FormState } from '@/types/forms';
-import type {
-    AuthSessionHandlers,
-    RequestConfigWithAuthMeta,
-} from '@/http/types';
+import type { AuthSessionHandlers, RequestConfigWithAuthMeta } from '@/http/types';
 import type { MaybeWrapped } from '@/types/settings/api';
 import type { SettingsPageKey } from '@/types/settings/navigation';
 import type { UserPreferences } from '@/types/settings/preferences';
@@ -28,9 +18,7 @@ describe('frontend public types', () => {
             email: string;
             email_verified_at: string | null;
         }>();
-        expectTypeOf<AuthStatus>().toEqualTypeOf<
-            'loading' | 'authenticated' | 'unauthenticated'
-        >();
+        expectTypeOf<AuthStatus>().toEqualTypeOf<'loading' | 'authenticated' | 'unauthenticated'>();
         expectTypeOf<LoginResult>().toEqualTypeOf<{ two_factor: boolean }>();
         expectTypeOf<UserResponse>().toEqualTypeOf<{ data: User }>();
         expectTypeOf<AuthStatusResponse>().toMatchTypeOf<{
@@ -56,12 +44,8 @@ describe('frontend public types', () => {
             requiresConfirmation: boolean;
             passwordRules: string;
         }>();
-        expectTypeOf<SettingsPageKey>().toEqualTypeOf<
-            'profile' | 'security' | 'preferences'
-        >();
-        expectTypeOf<MaybeWrapped<User>>().toEqualTypeOf<
-            User | { data: User }
-        >();
+        expectTypeOf<SettingsPageKey>().toEqualTypeOf<'profile' | 'security' | 'preferences'>();
+        expectTypeOf<MaybeWrapped<User>>().toEqualTypeOf<User | { data: User }>();
         expectTypeOf<FormErrors>().toEqualTypeOf<Record<string, string>>();
         expectTypeOf<FormState<{ name: string }>>().toHaveProperty('submit');
         expectTypeOf<AuthSessionHandlers>().toMatchTypeOf<{

@@ -8,10 +8,7 @@ import {
     regenerateRecoveryCodes as regenerateTwoFactorRecoveryCodesRoute,
     secretKey as twoFactorSecretKeyRoute,
 } from '@/routes/two-factor';
-import type {
-    TwoFactorQrCode,
-    TwoFactorSecretKeyResponse,
-} from '@/types/auth/two-factor';
+import type { TwoFactorQrCode, TwoFactorSecretKeyResponse } from '@/types/auth/two-factor';
 
 export class TwoFactorService {
     async enableTwoFactor(): Promise<void> {
@@ -31,9 +28,7 @@ export class TwoFactorService {
 
     async fetchTwoFactorQrCode(): Promise<TwoFactorQrCode> {
         try {
-            const response = await http.request<TwoFactorQrCode>(
-                twoFactorQrCodeRoute(),
-            );
+            const response = await http.request<TwoFactorQrCode>(twoFactorQrCodeRoute());
 
             return response.data;
         } catch (error) {
@@ -43,9 +38,8 @@ export class TwoFactorService {
 
     async fetchTwoFactorSecretKey(): Promise<{ secretKey: string }> {
         try {
-            const response = await http.request<TwoFactorSecretKeyResponse>(
-                twoFactorSecretKeyRoute(),
-            );
+            const response =
+                await http.request<TwoFactorSecretKeyResponse>(twoFactorSecretKeyRoute());
 
             return response.data;
         } catch (error) {
@@ -55,9 +49,7 @@ export class TwoFactorService {
 
     async fetchRecoveryCodes(): Promise<string[]> {
         try {
-            const response = await http.request<string[]>(
-                twoFactorRecoveryCodesRoute(),
-            );
+            const response = await http.request<string[]>(twoFactorRecoveryCodesRoute());
 
             return response.data;
         } catch (error) {

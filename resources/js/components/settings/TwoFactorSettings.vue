@@ -22,11 +22,7 @@ const processing = ref(false);
 const actionError = ref<string | null>(null);
 
 function redirectIfConfirmationRequired(error: unknown): boolean {
-    return navigateToConfirmPasswordIfRequired(
-        error,
-        router,
-        locationToPath(route),
-    );
+    return navigateToConfirmPasswordIfRequired(error, router, locationToPath(route));
 }
 
 async function startSetup(): Promise<void> {
@@ -134,14 +130,8 @@ onUnmounted(() => twoFactor.clearTwoFactorAuthData());
         </header>
         <FormFieldError v-if="actionError" :message="actionError" />
         <template v-if="props.settings.twoFactorEnabled">
-            <button type="button" :disabled="processing" @click="turnOff">
-                Disable 2FA
-            </button>
-            <button
-                type="button"
-                :disabled="processing"
-                @click="toggleRecoveryCodes"
-            >
+            <button type="button" :disabled="processing" @click="turnOff">Disable 2FA</button>
+            <button type="button" :disabled="processing" @click="toggleRecoveryCodes">
                 {{ showRecoveryCodes ? 'Hide' : 'View' }} recovery codes
             </button>
             <button
@@ -156,10 +146,7 @@ onUnmounted(() => twoFactor.clearTwoFactorAuthData());
                 v-if="showRecoveryCodes"
                 class="space-y-1 border border-neutral-200 p-4 font-mono text-sm"
             >
-                <li
-                    v-for="code in twoFactor.recoveryCodesList.value"
-                    :key="code"
-                >
+                <li v-for="code in twoFactor.recoveryCodesList.value" :key="code">
                     {{ code }}
                 </li>
             </ul>
@@ -172,13 +159,8 @@ onUnmounted(() => twoFactor.clearTwoFactorAuthData());
             </div>
         </template>
         <template v-else>
-            <button type="button" :disabled="processing" @click="startSetup">
-                Enable 2FA
-            </button>
-            <div
-                v-if="showSetup"
-                class="space-y-4 border border-neutral-200 p-4"
-            >
+            <button type="button" :disabled="processing" @click="startSetup">Enable 2FA</button>
+            <div v-if="showSetup" class="space-y-4 border border-neutral-200 p-4">
                 <div v-if="twoFactor.errors.value.length">
                     <FormFieldError
                         v-for="error in twoFactor.errors.value"
@@ -212,13 +194,9 @@ onUnmounted(() => twoFactor.clearTwoFactorAuthData());
                     />
                     <FormFieldError
                         v-if="codeForm.errors.code || codeForm.formError"
-                        :message="
-                            codeForm.errors.code ?? codeForm.formError ?? ''
-                        "
+                        :message="codeForm.errors.code ?? codeForm.formError ?? ''"
                     />
-                    <button type="submit" :disabled="codeForm.processing">
-                        Confirm 2FA
-                    </button>
+                    <button type="submit" :disabled="codeForm.processing">Confirm 2FA</button>
                 </form>
                 <button
                     v-if="props.settings.requiresConfirmation"

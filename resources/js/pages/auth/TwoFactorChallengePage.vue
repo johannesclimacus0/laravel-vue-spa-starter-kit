@@ -31,8 +31,7 @@ const authConfigContent = computed<TwoFactorConfigContent>(() => {
 
     return {
         title: 'Authentication code',
-        description:
-            'Enter the authentication code provided by your authenticator application.',
+        description: 'Enter the authentication code provided by your authenticator application.',
         buttonText: 'login using a recovery code',
     };
 });
@@ -96,10 +95,7 @@ import TwoFactorChallengeForm from '@/components/auth/TwoFactorChallengeForm.vue
 </script>
 
 <template>
-    <AuthPageLayout
-        :title="authConfigContent.title"
-        :description="authConfigContent.description"
-    >
+    <AuthPageLayout :title="authConfigContent.title" :description="authConfigContent.description">
         <TwoFactorChallengeForm
             :form="form"
             v-model:code="code"

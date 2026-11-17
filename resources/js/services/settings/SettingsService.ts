@@ -1,15 +1,7 @@
-import {
-    ensureCsrfCookie,
-    http,
-    isRequestAborted,
-    normalizeApiError,
-} from '@/http/http';
+import { ensureCsrfCookie, http, isRequestAborted, normalizeApiError } from '@/http/http';
 import type { PasswordConfirmationStatus } from '@/types/auth/session';
 import type { MaybeWrapped } from '@/types/settings/api';
-import type {
-    UserPreferences,
-    UserPreferencesResponse,
-} from '@/types/settings/preferences';
+import type { UserPreferences, UserPreferencesResponse } from '@/types/settings/preferences';
 import type { SecuritySettings } from '@/types/settings/security';
 import { confirmation as confirmedPasswordStatusRoute } from '@/routes/password';
 import { destroy as deleteProfileRoute } from '@/routes/profile';
@@ -39,17 +31,12 @@ function unwrap<T>(payload: MaybeWrapped<T>): T {
 }
 
 export class SettingsService {
-    async updateProfile(payload: {
-        name: string;
-        email: string;
-    }): Promise<void> {
+    async updateProfile(payload: { name: string; email: string }): Promise<void> {
         await ensureCsrfCookie();
         await http.request({ ...updateProfileRoute(), data: payload });
     }
 
-    async updatePreferences(
-        preferences: UserPreferences,
-    ): Promise<UserPreferences> {
+    async updatePreferences(preferences: UserPreferences): Promise<UserPreferences> {
         await ensureCsrfCookie();
 
         const response = await http.request<UserPreferencesResponse>({
@@ -74,9 +61,7 @@ export class SettingsService {
         await http.request({ ...deleteProfileRoute(), data: payload });
     }
 
-    async fetchPreferences(options?: {
-        signal?: AbortSignal;
-    }): Promise<UserPreferences> {
+    async fetchPreferences(options?: { signal?: AbortSignal }): Promise<UserPreferences> {
         try {
             const response = await http.request<UserPreferencesResponse>({
                 ...showPreferencesRoute(),
@@ -93,13 +78,12 @@ export class SettingsService {
         }
     }
 
-    async fetchSecuritySettings(options?: {
-        signal?: AbortSignal;
-    }): Promise<SecuritySettings> {
+    async fetchSecuritySettings(options?: { signal?: AbortSignal }): Promise<SecuritySettings> {
         try {
-            const response = await http.request<MaybeWrapped<SecuritySettings>>(
-                { ...security(), signal: options?.signal },
-            );
+            const response = await http.request<MaybeWrapped<SecuritySettings>>({
+                ...security(),
+                signal: options?.signal,
+            });
 
             return unwrap(response.data);
         } catch (error) {

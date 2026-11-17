@@ -1,5 +1,5 @@
 import { mount, flushPromises } from '@vue/test-utils';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vite-plus/test';
 import { defineComponent, h, nextTick } from 'vue';
 import { RouterView } from 'vue-router';
 import AuthBootstrap from '@/auth/AuthBootstrap.vue';
@@ -46,14 +46,8 @@ const mockedFetchPasswordConfirmationStatus = vi.spyOn(
     settingsService,
     'fetchPasswordConfirmationStatus',
 );
-const mockedFetchSecuritySettings = vi.spyOn(
-    settingsService,
-    'fetchSecuritySettings',
-);
-const mockedFetchRecoveryCodes = vi.spyOn(
-    twoFactorService,
-    'fetchRecoveryCodes',
-);
+const mockedFetchSecuritySettings = vi.spyOn(settingsService, 'fetchSecuritySettings');
+const mockedFetchRecoveryCodes = vi.spyOn(twoFactorService, 'fetchRecoveryCodes');
 
 const verifiedUser: User = {
     id: 1,
@@ -123,8 +117,7 @@ describe('SecuritySettingsPage', () => {
     });
 
     it('shows security-skeleton before password controls', async () => {
-        let resolveStatus: (value: { confirmed: boolean }) => void = () =>
-            undefined;
+        let resolveStatus: (value: { confirmed: boolean }) => void = () => undefined;
 
         mockedFetchPasswordConfirmationStatus.mockImplementation(
             () =>
@@ -136,9 +129,7 @@ describe('SecuritySettingsPage', () => {
 
         const { wrapper } = await mountSecurity();
 
-        expect(wrapper.find('[data-testid="security-skeleton"]').exists()).toBe(
-            true,
-        );
+        expect(wrapper.find('[data-testid="security-skeleton"]').exists()).toBe(true);
         expect(wrapper.find('#current_password').exists()).toBe(false);
         expect(wrapper.text()).not.toContain('Update password');
 
@@ -146,9 +137,7 @@ describe('SecuritySettingsPage', () => {
         await flushPromises();
         await nextTick();
 
-        expect(wrapper.find('[data-testid="security-skeleton"]').exists()).toBe(
-            false,
-        );
+        expect(wrapper.find('[data-testid="security-skeleton"]').exists()).toBe(false);
         expect(wrapper.find('#current_password').exists()).toBe(true);
     });
 
@@ -161,9 +150,7 @@ describe('SecuritySettingsPage', () => {
 
         expect(router.currentRoute.value.path).toBe('/confirm-password');
         expect(wrapper.find('#current_password').exists()).toBe(false);
-        expect(
-            wrapper.find('[data-test="update-password-button"]').exists(),
-        ).toBe(false);
+        expect(wrapper.find('[data-test="update-password-button"]').exists()).toBe(false);
         expect(wrapper.text()).not.toContain('Update password');
         expect(mockedFetchSecuritySettings).not.toHaveBeenCalled();
         expect(mockedFetchRecoveryCodes).not.toHaveBeenCalled();

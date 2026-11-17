@@ -1,5 +1,5 @@
 import { mount, flushPromises } from '@vue/test-utils';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vite-plus/test';
 import { defineComponent } from 'vue';
 import { RouterView } from 'vue-router';
 import AuthBootstrap from '@/auth/AuthBootstrap.vue';
@@ -21,14 +21,8 @@ vi.mock('@/services/auth/AuthService', () => ({
 import { authService } from '@/services/auth/AuthService';
 
 const mockedFetchCurrentUser = vi.spyOn(authService, 'fetchCurrentUser');
-const mockedRequestPasswordReset = vi.spyOn(
-    authService,
-    'requestPasswordReset',
-);
-const mockedSubmitTwoFactorChallenge = vi.spyOn(
-    authService,
-    'submitTwoFactorChallenge',
-);
+const mockedRequestPasswordReset = vi.spyOn(authService, 'requestPasswordReset');
+const mockedSubmitTwoFactorChallenge = vi.spyOn(authService, 'submitTwoFactorChallenge');
 const mockedConfirmPassword = vi.spyOn(authService, 'confirmPassword');
 
 describe('ForgotPasswordPage', () => {
@@ -39,9 +33,7 @@ describe('ForgotPasswordPage', () => {
     });
 
     it('shows success status after requesting a reset link', async () => {
-        mockedRequestPasswordReset.mockResolvedValue(
-            'We have emailed your password reset link.',
-        );
+        mockedRequestPasswordReset.mockResolvedValue('We have emailed your password reset link.');
 
         const router = createSpaTestRouter({
             children: [
@@ -69,9 +61,7 @@ describe('ForgotPasswordPage', () => {
         await wrapper.find('form').trigger('submit.prevent');
         await flushPromises();
 
-        expect(wrapper.text()).toContain(
-            'We have emailed your password reset link.',
-        );
+        expect(wrapper.text()).toContain('We have emailed your password reset link.');
     });
 });
 
@@ -108,9 +98,7 @@ describe('TwoFactorChallengePage', () => {
         expect(wrapper.text()).toContain('Authentication code');
         await wrapper
             .findAll('button')
-            .find((button) =>
-                button.text().includes('login using a recovery code'),
-            )
+            .find((button) => button.text().includes('login using a recovery code'))
             ?.trigger('click');
         await flushPromises();
 

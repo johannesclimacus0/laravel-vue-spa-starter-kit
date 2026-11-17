@@ -41,9 +41,7 @@ async function onResendVerification(): Promise<void> {
     <section class="space-y-6">
         <header>
             <h2 class="text-lg font-semibold">Profile</h2>
-            <p class="text-sm text-neutral-600">
-                Update your name and email address
-            </p>
+            <p class="text-sm text-neutral-600">Update your name and email address</p>
         </header>
 
         <form class="space-y-6" novalidate @submit.prevent="onSubmit">
@@ -117,11 +115,7 @@ async function onResendVerification(): Promise<void> {
             />
 
             <div class="flex items-center gap-4">
-                <button
-                    type="submit"
-                    :disabled="form.processing"
-                    data-test="update-profile-button"
-                >
+                <button type="submit" :disabled="form.processing" data-test="update-profile-button">
                     Save
                 </button>
                 <FormStatusMessage v-if="form.status" :message="form.status" />

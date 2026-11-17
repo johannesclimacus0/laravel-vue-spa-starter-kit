@@ -21,9 +21,7 @@ import AuthSubmitButton from '@/components/auth/AuthSubmitButton.vue';
                     autocomplete="current-password"
                     autofocus
                     :aria-invalid="Boolean(props.form.errors.password)"
-                    :aria-describedby="
-                        fieldDescribedBy('password', props.form.errors)
-                    "
+                    :aria-describedby="fieldDescribedBy('password', props.form.errors)"
                     :disabled="props.form.processing"
                 />
                 <p

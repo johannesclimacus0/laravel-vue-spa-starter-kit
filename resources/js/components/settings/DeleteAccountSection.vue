@@ -37,9 +37,7 @@ async function deleteAccount(): Promise<void> {
     <section class="space-y-4 border-t border-neutral-200 pt-6">
         <header>
             <h2 class="text-lg font-semibold">Delete account</h2>
-            <p class="text-sm text-neutral-600">
-                Delete your account and its data permanently.
-            </p>
+            <p class="text-sm text-neutral-600">Delete your account and its data permanently.</p>
         </header>
         <button type="button" @click="openDialog">Delete account</button>
         <div
@@ -54,13 +52,8 @@ async function deleteAccount(): Promise<void> {
                 class="w-full max-w-md space-y-4 border border-neutral-300 bg-white p-6"
                 @keydown.esc="closeDialog"
             >
-                <h2 id="delete-title" class="text-lg font-semibold">
-                    Delete account?
-                </h2>
-                <p>
-                    This permanently deletes your account. Enter your password
-                    to confirm.
-                </p>
+                <h2 id="delete-title" class="text-lg font-semibold">Delete account?</h2>
+                <p>This permanently deletes your account. Enter your password to confirm.</p>
                 <form class="space-y-4" @submit.prevent="deleteAccount">
                     <label for="delete-password">Password</label>
                     <input
@@ -71,9 +64,7 @@ async function deleteAccount(): Promise<void> {
                         autocomplete="current-password"
                         :disabled="form.processing"
                         :aria-invalid="Boolean(form.errors.password)"
-                        :aria-describedby="
-                            fieldDescribedBy('password', form.errors)
-                        "
+                        :aria-describedby="fieldDescribedBy('password', form.errors)"
                     />
                     <FormFieldError
                         v-if="form.errors.password || form.formError"
@@ -81,12 +72,8 @@ async function deleteAccount(): Promise<void> {
                         :message="form.errors.password ?? form.formError ?? ''"
                     />
                     <div class="flex justify-end gap-2">
-                        <button type="button" @click="closeDialog">
-                            Cancel
-                        </button>
-                        <button type="submit" :disabled="form.processing">
-                            Delete account
-                        </button>
+                        <button type="button" @click="closeDialog">Cancel</button>
+                        <button type="submit" :disabled="form.processing">Delete account</button>
                     </div>
                 </form>
             </section>

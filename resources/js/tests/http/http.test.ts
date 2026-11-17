@@ -1,6 +1,6 @@
 import { normalizeApiError, isRequestAborted } from '@/http/http';
 import axios, { AxiosError, type AxiosResponse } from 'axios';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it } from 'vite-plus/test';
 
 function axiosErrorFrom(status: number, data: unknown): AxiosError {
     const response = {
@@ -53,9 +53,7 @@ describe('normalizeApiError', () => {
     });
 
     it('normalizes unauthenticated responses', () => {
-        expect(normalizeApiError(axiosErrorFrom(401, {})).kind).toBe(
-            'unauthenticated',
-        );
+        expect(normalizeApiError(axiosErrorFrom(401, {})).kind).toBe('unauthenticated');
     });
 
     it('normalizes CSRF / session expiration responses', () => {
@@ -63,9 +61,7 @@ describe('normalizeApiError', () => {
     });
 
     it('normalizes password confirmation required responses', () => {
-        expect(normalizeApiError(axiosErrorFrom(423, {})).kind).toBe(
-            'password_confirmation',
-        );
+        expect(normalizeApiError(axiosErrorFrom(423, {})).kind).toBe('password_confirmation');
     });
 
     it('normalizes network failures', () => {

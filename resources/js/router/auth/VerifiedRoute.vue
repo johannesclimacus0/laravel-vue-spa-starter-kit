@@ -29,7 +29,5 @@ watchEffect(() => {
 </script>
 
 <template>
-    <RouterView
-        v-if="!auth.isLoading && auth.isAuthenticated && auth.isVerified"
-    />
+    <RouterView v-if="!auth.isLoading && auth.isAuthenticated && auth.isVerified" />
 </template>

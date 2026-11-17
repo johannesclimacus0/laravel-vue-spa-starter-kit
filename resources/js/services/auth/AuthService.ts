@@ -1,9 +1,4 @@
-import {
-    ensureCsrfCookie,
-    http,
-    isRequestAborted,
-    normalizeApiError,
-} from '@/http/http';
+import { ensureCsrfCookie, http, isRequestAborted, normalizeApiError } from '@/http/http';
 import { store as loginRoute } from '@/routes/login';
 import {
     email as requestPasswordResetRoute,
@@ -26,9 +21,7 @@ import axios from 'axios';
 export type { LoginResult } from '@/types/auth/service';
 
 export class AuthService {
-    async fetchCurrentUser(options?: {
-        signal?: AbortSignal;
-    }): Promise<User | null> {
+    async fetchCurrentUser(options?: { signal?: AbortSignal }): Promise<User | null> {
         try {
             const response = await http.request<UserResponse>({
                 ...user(),
@@ -106,25 +99,15 @@ export class AuthService {
             data: payload,
         });
 
-        return (
-            response.data.status ??
-            response.data.message ??
-            'Your password has been reset.'
-        );
+        return response.data.status ?? response.data.message ?? 'Your password has been reset.';
     }
 
     async resendVerificationEmail(): Promise<string> {
         await ensureCsrfCookie();
 
-        const response = await http.request<StatusResponse>(
-            resendVerificationEmailRoute(),
-        );
+        const response = await http.request<StatusResponse>(resendVerificationEmailRoute());
 
-        return (
-            response.data.status ??
-            response.data.message ??
-            'verification-link-sent'
-        );
+        return response.data.status ?? response.data.message ?? 'verification-link-sent';
     }
 
     async confirmPassword(payload: { password: string }): Promise<void> {

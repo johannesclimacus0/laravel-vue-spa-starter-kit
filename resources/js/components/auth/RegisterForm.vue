@@ -16,11 +16,7 @@ const emit = defineEmits<{ submit: [] }>();
         :message="form.formError"
     />
 
-    <form
-        class="flex flex-col gap-6"
-        novalidate
-        @submit.prevent="emit('submit')"
-    >
+    <form class="flex flex-col gap-6" novalidate @submit.prevent="emit('submit')">
         <div class="grid gap-6">
             <div class="grid gap-2">
                 <label for="name">Name</label>
@@ -79,9 +75,7 @@ const emit = defineEmits<{ submit: [] }>();
                     name="password"
                     placeholder="Password"
                     :aria-invalid="Boolean(form.errors.password)"
-                    :aria-describedby="
-                        fieldDescribedBy('password', form.errors)
-                    "
+                    :aria-describedby="fieldDescribedBy('password', form.errors)"
                     :disabled="form.processing"
                 />
                 <FormFieldError
@@ -103,9 +97,7 @@ const emit = defineEmits<{ submit: [] }>();
                     name="password_confirmation"
                     placeholder="Confirm password"
                     :aria-invalid="Boolean(form.errors.password_confirmation)"
-                    :aria-describedby="
-                        fieldDescribedBy('password_confirmation', form.errors)
-                    "
+                    :aria-describedby="fieldDescribedBy('password_confirmation', form.errors)"
                     :disabled="form.processing"
                 />
                 <FormFieldError

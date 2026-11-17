@@ -1,4 +1,4 @@
-import { afterEach, beforeEach } from 'vitest';
+import { afterEach, beforeEach } from 'vite-plus/test';
 import { enableAutoUnmount } from '@vue/test-utils';
 import { createPinia, setActivePinia } from 'pinia';
 
@@ -32,16 +32,10 @@ function createMatchMediaMock(query: string, matches = false): MatchMediaMock {
             return currentMatches;
         },
         onchange: null,
-        addEventListener: (
-            _type: string,
-            listener: (event: MediaQueryListEvent) => void,
-        ) => {
+        addEventListener: (_type: string, listener: (event: MediaQueryListEvent) => void) => {
             listeners.add(listener);
         },
-        removeEventListener: (
-            _type: string,
-            listener: (event: MediaQueryListEvent) => void,
-        ) => {
+        removeEventListener: (_type: string, listener: (event: MediaQueryListEvent) => void) => {
             listeners.delete(listener);
         },
         addListener: () => {},

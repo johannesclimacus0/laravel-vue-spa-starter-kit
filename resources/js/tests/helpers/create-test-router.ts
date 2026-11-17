@@ -67,9 +67,7 @@ type CreateSpaTestRouterOptions = {
  * Memory router with a `/` shell and stubbed SPA link destinations.
  * Does not import production guards, AuthBootstrap, or AppShell.
  */
-export function createSpaTestRouter(
-    options: CreateSpaTestRouterOptions,
-): Router {
+export function createSpaTestRouter(options: CreateSpaTestRouterOptions): Router {
     const shell =
         options.shell ??
         defineComponent({

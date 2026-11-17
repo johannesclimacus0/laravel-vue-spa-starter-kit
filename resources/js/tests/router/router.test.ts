@@ -1,5 +1,5 @@
 import { router } from '@/router';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it } from 'vite-plus/test';
 
 describe('vue router architecture', () => {
     it('registers core spa routes with lazy pages and eager wrappers', () => {
@@ -19,32 +19,26 @@ describe('vue router architecture', () => {
             }
 
             for (const component of Object.values(route.components)) {
-                expect(typeof component).toBe(
-                    route.name ? 'function' : 'object',
-                );
+                expect(typeof component).toBe(route.name ? 'function' : 'object');
             }
         }
     });
 
     it('sends the root path to login', () => {
-        expect(
-            router.getRoutes().find((route) => route.path === '/')?.redirect,
-        ).toBe('/login');
+        expect(router.getRoutes().find((route) => route.path === '/')?.redirect).toBe('/login');
     });
 
     it('redirects legacy settings password and two-factor paths to security', () => {
         const routes = router.getRoutes();
 
-        expect(
-            routes.find((route) => route.path === '/settings/password')
-                ?.redirect,
-        ).toBe('/settings/security');
-        expect(
-            routes.find((route) => route.path === '/settings/two-factor')
-                ?.redirect,
-        ).toBe('/settings/security');
-        expect(
-            routes.find((route) => route.path === '/settings')?.redirect,
-        ).toBe('/settings/profile');
+        expect(routes.find((route) => route.path === '/settings/password')?.redirect).toBe(
+            '/settings/security',
+        );
+        expect(routes.find((route) => route.path === '/settings/two-factor')?.redirect).toBe(
+            '/settings/security',
+        );
+        expect(routes.find((route) => route.path === '/settings')?.redirect).toBe(
+            '/settings/profile',
+        );
     });
 });

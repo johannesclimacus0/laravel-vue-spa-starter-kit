@@ -1,11 +1,7 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
 import { useAuthStore } from '@/stores/auth/index';
-import {
-    getPostAuthPath,
-    historyStateFrom,
-    historyStateStatus,
-} from '@/lib/navigation';
+import { getPostAuthPath, historyStateFrom, historyStateStatus } from '@/lib/navigation';
 import { useRouter } from 'vue-router';
 import LoginForm from '@/components/auth/LoginForm.vue';
 import { useForm } from '@/composables/useForm';
@@ -63,10 +59,6 @@ import AuthPageLayout from '@/layouts/auth/AuthPageLayout.vue';
         title="Log in to your account"
         description="Enter your email and password below to log in"
     >
-        <LoginForm
-            :form="form"
-            :flash-status="flashStatus"
-            @submit="onSubmit"
-        />
+        <LoginForm :form="form" :flash-status="flashStatus" @submit="onSubmit" />
     </AuthPageLayout>
 </template>

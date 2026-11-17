@@ -11,10 +11,7 @@ const pages: { key: SettingsPageKey; label: string; href: string }[] = [
 </script>
 
 <template>
-    <nav
-        class="mt-4 flex gap-4 border-b border-neutral-200 pb-3"
-        aria-label="Settings"
-    >
+    <nav class="mt-4 flex gap-4 border-b border-neutral-200 pb-3" aria-label="Settings">
         <a
             v-for="page in pages"
             :key="page.key"

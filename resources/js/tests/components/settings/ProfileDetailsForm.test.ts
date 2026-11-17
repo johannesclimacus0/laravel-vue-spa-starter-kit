@@ -1,5 +1,5 @@
 import { flushPromises, mount } from '@vue/test-utils';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vite-plus/test';
 import ProfileDetailsForm from '@/components/settings/ProfileDetailsForm.vue';
 import type { User } from '@/types/auth';
 
@@ -56,9 +56,7 @@ describe('ProfileDetailsForm', () => {
         await flushPromises();
 
         expect(wrapper.find('#name-error').text()).toBe('Name is required.');
-        expect(wrapper.find('#name').attributes('aria-describedby')).toBe(
-            'name-error',
-        );
+        expect(wrapper.find('#name').attributes('aria-describedby')).toBe('name-error');
     });
 
     it('shows verification resend feedback', async () => {

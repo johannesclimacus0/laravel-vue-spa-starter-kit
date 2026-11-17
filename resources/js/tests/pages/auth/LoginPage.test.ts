@@ -1,5 +1,5 @@
 import { mount, flushPromises } from '@vue/test-utils';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vite-plus/test';
 import { defineComponent, nextTick } from 'vue';
 import { RouterView } from 'vue-router';
 import AuthBootstrap from '@/auth/AuthBootstrap.vue';
@@ -93,14 +93,12 @@ describe('LoginPage', () => {
 
     it('submits login, refreshes user once, and navigates to dashboard', async () => {
         mockedLogin.mockResolvedValue({ two_factor: false });
-        mockedFetchCurrentUser
-            .mockResolvedValueOnce(null)
-            .mockResolvedValueOnce({
-                id: 1,
-                name: 'Jane',
-                email: 'jane@example.com',
-                email_verified_at: '2026-01-01T00:00:00+00:00',
-            });
+        mockedFetchCurrentUser.mockResolvedValueOnce(null).mockResolvedValueOnce({
+            id: 1,
+            name: 'Jane',
+            email: 'jane@example.com',
+            email_verified_at: '2026-01-01T00:00:00+00:00',
+        });
 
         const { wrapper, router } = await mountLogin();
 

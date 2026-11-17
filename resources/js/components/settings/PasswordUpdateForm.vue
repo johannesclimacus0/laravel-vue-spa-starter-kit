@@ -7,9 +7,7 @@ import FormFieldError from '@/components/shared/FormFieldError.vue';
 import FormStatusMessage from '@/components/shared/FormStatusMessage.vue';
 
 const props = defineProps<{ passwordRules: string }>();
-const currentPasswordInput = useTemplateRef<HTMLInputElement>(
-    'currentPasswordInput',
-);
+const currentPasswordInput = useTemplateRef<HTMLInputElement>('currentPasswordInput');
 const passwordInput = useTemplateRef<HTMLInputElement>('passwordInput');
 const form = useForm({
     current_password: '',
@@ -69,9 +67,7 @@ async function onSubmit(): Promise<void> {
                     autocomplete="current-password"
                     placeholder="Current password"
                     :aria-invalid="Boolean(form.errors.current_password)"
-                    :aria-describedby="
-                        fieldDescribedBy('current_password', form.errors)
-                    "
+                    :aria-describedby="fieldDescribedBy('current_password', form.errors)"
                     :disabled="form.processing"
                 />
                 <FormFieldError
@@ -94,9 +90,7 @@ async function onSubmit(): Promise<void> {
                     placeholder="New password"
                     :passwordrules="props.passwordRules"
                     :aria-invalid="Boolean(form.errors.password)"
-                    :aria-describedby="
-                        fieldDescribedBy('password', form.errors)
-                    "
+                    :aria-describedby="fieldDescribedBy('password', form.errors)"
                     :disabled="form.processing"
                 />
                 <FormFieldError
@@ -118,9 +112,7 @@ async function onSubmit(): Promise<void> {
                     placeholder="Confirm password"
                     :passwordrules="props.passwordRules"
                     :aria-invalid="Boolean(form.errors.password_confirmation)"
-                    :aria-describedby="
-                        fieldDescribedBy('password_confirmation', form.errors)
-                    "
+                    :aria-describedby="fieldDescribedBy('password_confirmation', form.errors)"
                     :disabled="form.processing"
                 />
                 <FormFieldError

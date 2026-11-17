@@ -27,10 +27,9 @@ onMounted(() => {
 
     void (async () => {
         try {
-            const { confirmed } =
-                await settingsService.fetchPasswordConfirmationStatus({
-                    signal: controller.signal,
-                });
+            const { confirmed } = await settingsService.fetchPasswordConfirmationStatus({
+                signal: controller.signal,
+            });
 
             if (!active) return;
 
@@ -83,17 +82,11 @@ onUnmounted(() => {
             <p class="text-sm text-neutral-600">Loading security settings…</p>
         </div>
 
-        <FormFieldError
-            v-if="phase === 'error' && loadError"
-            :message="loadError"
-        />
+        <FormFieldError v-if="phase === 'error' && loadError" :message="loadError" />
 
         <template v-if="phase === 'ready' && settings">
             <PasswordUpdateForm :password-rules="settings.passwordRules" />
-            <TwoFactorSettings
-                :settings="settings"
-                @settings-changed="loadSettings"
-            />
+            <TwoFactorSettings :settings="settings" @settings-changed="loadSettings" />
         </template>
     </main>
 </template>
