@@ -1,6 +1,6 @@
 import { navigateToConfirmPasswordIfRequired } from '@/http/auth/password-confirmation';
 import axios, { AxiosError, type AxiosResponse } from 'axios';
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vite-plus/test';
 import type { Router } from 'vue-router';
 
 function createRouterMock() {

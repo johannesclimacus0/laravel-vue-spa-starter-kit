@@ -1,7 +1,4 @@
-import {
-    isRequestAborted,
-    setAuthSessionHandlersSuppressed,
-} from '@/http/http';
+import { isRequestAborted, setAuthSessionHandlersSuppressed } from '@/http/http';
 import { authService } from '@/services/auth/AuthService';
 import type { AuthStatus, User } from '@/types/auth/index';
 import { defineStore } from 'pinia';
@@ -87,9 +84,7 @@ export const useAuthStore = defineStore('auth', () => {
         status,
         isAuthenticated: computed(() => status.value === 'authenticated'),
         isLoading: computed(() => status.value === 'loading'),
-        isVerified: computed(
-            () => user.value !== null && user.value.email_verified_at !== null,
-        ),
+        isVerified: computed(() => user.value !== null && user.value.email_verified_at !== null),
         refreshUser,
         setUser,
         clearUser,

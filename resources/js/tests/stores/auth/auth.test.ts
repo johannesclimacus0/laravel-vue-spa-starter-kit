@@ -1,7 +1,7 @@
 import { authService } from '@/services/auth/AuthService';
 import { useAuthStore } from '@/stores/auth/index';
 import { createPinia, setActivePinia } from 'pinia';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vite-plus/test';
 import { flushPromises } from '@vue/test-utils';
 
 vi.mock('@/services/auth/AuthService', () => ({

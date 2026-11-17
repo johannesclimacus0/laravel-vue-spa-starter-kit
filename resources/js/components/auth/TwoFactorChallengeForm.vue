@@ -20,14 +20,8 @@ import AuthSubmitButton from '@/components/auth/AuthSubmitButton.vue';
 <template>
     <div class="space-y-6">
         <template v-if="!showRecoveryInput">
-            <form
-                class="space-y-4"
-                novalidate
-                @submit.prevent="emit('submitCode')"
-            >
-                <div
-                    class="flex flex-col items-center justify-center space-y-3 text-center"
-                >
+            <form class="space-y-4" novalidate @submit.prevent="emit('submitCode')">
+                <div class="flex flex-col items-center justify-center space-y-3 text-center">
                     <div class="flex w-full items-center justify-center">
                         <input
                             id="otp"
@@ -40,9 +34,7 @@ import AuthSubmitButton from '@/components/auth/AuthSubmitButton.vue';
                             :disabled="props.form.processing"
                             autofocus
                             :aria-invalid="Boolean(props.form.errors.code)"
-                            :aria-describedby="
-                                fieldDescribedBy('code', props.form.errors)
-                            "
+                            :aria-describedby="fieldDescribedBy('code', props.form.errors)"
                         />
                     </div>
                     <p
@@ -74,11 +66,7 @@ import AuthSubmitButton from '@/components/auth/AuthSubmitButton.vue';
         </template>
 
         <template v-else>
-            <form
-                class="space-y-4"
-                novalidate
-                @submit.prevent="emit('submitRecovery')"
-            >
+            <form class="space-y-4" novalidate @submit.prevent="emit('submitRecovery')">
                 <div class="grid gap-2">
                     <label for="recovery_code">Recovery code</label>
                     <input
@@ -90,9 +78,7 @@ import AuthSubmitButton from '@/components/auth/AuthSubmitButton.vue';
                         autofocus
                         required
                         :aria-invalid="Boolean(props.form.errors.recovery_code)"
-                        :aria-describedby="
-                            fieldDescribedBy('recovery_code', props.form.errors)
-                        "
+                        :aria-describedby="fieldDescribedBy('recovery_code', props.form.errors)"
                         :disabled="props.form.processing"
                     />
                     <p

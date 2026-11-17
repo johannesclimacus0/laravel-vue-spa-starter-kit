@@ -1,5 +1,5 @@
 import { useForm } from '@/composables/useForm';
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vite-plus/test';
 
 describe('useForm', () => {
     it('maps validation errors and clears processing', async () => {

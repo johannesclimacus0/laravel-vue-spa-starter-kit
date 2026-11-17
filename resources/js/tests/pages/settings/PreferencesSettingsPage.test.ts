@@ -1,6 +1,6 @@
 import { flushPromises, mount } from '@vue/test-utils';
 import { createPinia } from 'pinia';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vite-plus/test';
 import PreferencesSettingsPage from '@/pages/settings/PreferencesSettingsPage.vue';
 
 const { fetchPreferences, updatePreferences } = vi.hoisted(() => ({

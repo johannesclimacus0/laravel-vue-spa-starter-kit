@@ -12,7 +12,5 @@ export type FormState<T extends Record<string, unknown>> = {
     reset: (...fields: Array<keyof T>) => void;
     setStatus: (value: string | null) => void;
     setFormError: (value: string | null) => void;
-    submit: (
-        action: (formData: T) => Promise<void | string | null>,
-    ) => Promise<void>;
+    submit: (action: (formData: T) => Promise<void | string | null>) => Promise<void>;
 };

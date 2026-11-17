@@ -1,6 +1,6 @@
 import { flushPromises, mount } from '@vue/test-utils';
 import { createPinia } from 'pinia';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vite-plus/test';
 import TimezonePreferenceForm from '@/components/settings/TimezonePreferenceForm.vue';
 
 const { fetchPreferences, updatePreferences } = vi.hoisted(() => ({
@@ -19,8 +19,7 @@ describe('TimezonePreferenceForm', () => {
     });
 
     it('shows loading while preferences are being fetched', async () => {
-        let resolvePreferences: (value: { timezone: string }) => void = () =>
-            undefined;
+        let resolvePreferences: (value: { timezone: string }) => void = () => undefined;
         fetchPreferences.mockImplementation(
             () => new Promise((resolve) => (resolvePreferences = resolve)),
         );
@@ -43,12 +42,8 @@ describe('TimezonePreferenceForm', () => {
         });
         await flushPromises();
 
-        expect(
-            (wrapper.find('select').element as HTMLSelectElement).value,
-        ).toBe('US/Pacific-New');
-        expect(wrapper.find('option[value="US/Pacific-New"]').exists()).toBe(
-            true,
-        );
+        expect((wrapper.find('select').element as HTMLSelectElement).value).toBe('US/Pacific-New');
+        expect(wrapper.find('option[value="US/Pacific-New"]').exists()).toBe(true);
     });
 
     it('shows a save error and allows a successful retry', async () => {

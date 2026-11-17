@@ -1,9 +1,6 @@
 <script setup lang="ts">
 import { useAuthStore } from '@/stores/auth/index';
-import {
-    configureAuthSessionHandlers,
-    setAuthSessionHandlersSuppressed,
-} from '@/http/http';
+import { configureAuthSessionHandlers, setAuthSessionHandlersSuppressed } from '@/http/http';
 import { getSafeInternalPath, locationToPath } from '@/lib/navigation';
 import { onMounted, onUnmounted, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';

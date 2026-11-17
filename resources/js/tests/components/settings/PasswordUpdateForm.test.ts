@@ -1,5 +1,5 @@
 import { flushPromises, mount } from '@vue/test-utils';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vite-plus/test';
 import PasswordUpdateForm from '@/components/settings/PasswordUpdateForm.vue';
 
 const { updatePassword } = vi.hoisted(() => ({ updatePassword: vi.fn() }));
@@ -49,8 +49,8 @@ describe('PasswordUpdateForm', () => {
         expect(wrapper.find('#current_password-error').text()).toBe(
             'Current password is incorrect.',
         );
-        expect(
-            wrapper.find('#current_password').attributes('aria-describedby'),
-        ).toBe('current_password-error');
+        expect(wrapper.find('#current_password').attributes('aria-describedby')).toBe(
+            'current_password-error',
+        );
     });
 });

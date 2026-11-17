@@ -1,5 +1,5 @@
 import { mount, flushPromises } from '@vue/test-utils';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vite-plus/test';
 import { defineComponent, h, nextTick } from 'vue';
 import { RouterView } from 'vue-router';
 import AuthBootstrap from '@/auth/AuthBootstrap.vue';
@@ -30,10 +30,7 @@ import { authService } from '@/services/auth/AuthService';
 import { settingsService } from '@/services/settings/SettingsService';
 
 const mockedFetchCurrentUser = vi.spyOn(authService, 'fetchCurrentUser');
-const mockedResendVerificationEmail = vi.spyOn(
-    authService,
-    'resendVerificationEmail',
-);
+const mockedResendVerificationEmail = vi.spyOn(authService, 'resendVerificationEmail');
 const mockedUpdateProfile = vi.spyOn(settingsService, 'updateProfile');
 const mockedDeleteAccount = vi.spyOn(settingsService, 'deleteAccount');
 
@@ -98,19 +95,15 @@ describe('ProfileSettingsPage', () => {
         const email = wrapper.find('input#email');
 
         expect((name.element as HTMLInputElement).value).toBe('Jane Doe');
-        expect((email.element as HTMLInputElement).value).toBe(
-            'jane@example.com',
-        );
+        expect((email.element as HTMLInputElement).value).toBe('jane@example.com');
     });
 
     it('submits updateProfile then refreshUser', async () => {
         mockedUpdateProfile.mockResolvedValue(undefined);
-        mockedFetchCurrentUser
-            .mockResolvedValueOnce(verifiedUser)
-            .mockResolvedValueOnce({
-                ...verifiedUser,
-                name: 'Jane Updated',
-            });
+        mockedFetchCurrentUser.mockResolvedValueOnce(verifiedUser).mockResolvedValueOnce({
+            ...verifiedUser,
+            name: 'Jane Updated',
+        });
 
         const { wrapper } = await mountProfile();
 
@@ -137,15 +130,11 @@ describe('ProfileSettingsPage', () => {
         await nextTick();
 
         expect(wrapper.text()).toContain('Your email address is unverified.');
-        expect(wrapper.text()).toContain(
-            'Click here to re-send the verification email.',
-        );
+        expect(wrapper.text()).toContain('Click here to re-send the verification email.');
     });
 
     it('resends verification and displays the response', async () => {
-        mockedResendVerificationEmail.mockResolvedValue(
-            'verification-link-sent',
-        );
+        mockedResendVerificationEmail.mockResolvedValue('verification-link-sent');
         const { wrapper } = await mountProfile({
             ...verifiedUser,
             email_verified_at: null,
@@ -169,8 +158,7 @@ describe('ProfileSettingsPage', () => {
             .findAll('button')
             .find(
                 (button) =>
-                    button.text() === 'Delete account' &&
-                    button.attributes('type') !== 'submit',
+                    button.text() === 'Delete account' && button.attributes('type') !== 'submit',
             );
         await deleteAccountButton?.trigger('click');
         expect(wrapper.find('[role="dialog"]').exists()).toBe(true);

@@ -7,10 +7,7 @@ import AuthSubmitButton from '@/components/auth/AuthSubmitButton.vue';
 </script>
 
 <template>
-    <div
-        v-if="props.form.status"
-        class="mb-4 text-center text-sm font-medium text-green-600"
-    >
+    <div v-if="props.form.status" class="mb-4 text-center text-sm font-medium text-green-600">
         {{ props.form.status }}
     </div>
 
@@ -27,9 +24,7 @@ import AuthSubmitButton from '@/components/auth/AuthSubmitButton.vue';
                     autofocus
                     placeholder="email@example.com"
                     :aria-invalid="Boolean(props.form.errors.email)"
-                    :aria-describedby="
-                        fieldDescribedBy('email', props.form.errors)
-                    "
+                    :aria-describedby="fieldDescribedBy('email', props.form.errors)"
                     :disabled="props.form.processing"
                 />
                 <p

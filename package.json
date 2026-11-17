@@ -7,7 +7,7 @@
         "dev": "vp dev",
         "check": "vp check",
         "check:fix": "vp check --fix",
-        "types:check": "vue-tsc --noEmit",
+        "types:check": "php artisan wayfinder:generate && vue-tsc --noEmit",
         "test": "vp test",
         "test:watch": "vp test --watch"
     },
@@ -31,8 +31,8 @@
         "jsdom": "^29.1.1",
         "laravel-echo": "^2.6.1",
         "pusher-js": "^8.6.0",
-        "vite-plus": "0.3.3",
-        "vue-tsc": "^2.2.4"
+        "vite-plus": "1.7.0",
+        "vue-tsc": "^3.3.14"
     },
     "optionalDependencies": {
         "@laravel/multiplex": "^0.4.1",
@@ -42,7 +42,6 @@
     },
     "overrides": {
         "shell-quote": "1.12.0",
-        "vite": "npm:@voidzero-dev/vite-plus-core@0.3.3",
-        "vitest": "4.1.11"
+        "vite": "npm:@voidzero-dev/vite-plus-core@8.3.8000"
     }
 }

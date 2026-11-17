@@ -18,10 +18,7 @@ const props = withDefaults(
 const emit = defineEmits<{ submit: [] }>();
 
 function onRememberChange(event: Event): void {
-    props.form.setField(
-        'remember',
-        (event.currentTarget as HTMLInputElement).checked,
-    );
+    props.form.setField('remember', (event.currentTarget as HTMLInputElement).checked);
 }
 </script>
 
@@ -39,11 +36,7 @@ function onRememberChange(event: Event): void {
         :message="form.formError"
     />
 
-    <form
-        class="flex flex-col gap-6"
-        novalidate
-        @submit.prevent="emit('submit')"
-    >
+    <form class="flex flex-col gap-6" novalidate @submit.prevent="emit('submit')">
         <div class="grid gap-6">
             <div class="grid gap-2">
                 <label for="email">Email address</label>
@@ -90,9 +83,7 @@ function onRememberChange(event: Event): void {
                     autocomplete="current-password"
                     placeholder="Password"
                     :aria-invalid="Boolean(form.errors.password)"
-                    :aria-describedby="
-                        fieldDescribedBy('password', form.errors)
-                    "
+                    :aria-describedby="fieldDescribedBy('password', form.errors)"
                     :disabled="form.processing"
                 />
                 <FormFieldError

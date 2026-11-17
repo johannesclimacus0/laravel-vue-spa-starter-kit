@@ -44,10 +44,6 @@ import VerifyEmailActions from '@/components/auth/VerifyEmailActions.vue';
         title="Email verification"
         description="Please verify your email address by clicking on the link we just emailed to you."
     >
-        <VerifyEmailActions
-            :form="form"
-            @resend="onResend"
-            @logout="onLogout"
-        />
+        <VerifyEmailActions :form="form" @resend="onResend" @logout="onLogout" />
     </AuthPageLayout>
 </template>

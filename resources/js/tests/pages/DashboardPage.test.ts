@@ -1,5 +1,5 @@
 import { mount, flushPromises } from '@vue/test-utils';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vite-plus/test';
 import { defineComponent } from 'vue';
 import { RouterView } from 'vue-router';
 import AuthBootstrap from '@/auth/AuthBootstrap.vue';
@@ -90,10 +90,7 @@ describe('DashboardPage', () => {
 
         for (const [name, value] of Object.entries(settingsService)) {
             if (typeof value === 'function' && 'mock' in value) {
-                expect(
-                    value,
-                    `settings-api.${name} should not be called`,
-                ).not.toHaveBeenCalled();
+                expect(value, `settings-api.${name} should not be called`).not.toHaveBeenCalled();
             }
         }
     });

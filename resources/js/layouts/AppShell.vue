@@ -29,23 +29,15 @@ async function handleLogout(): Promise<void> {
     <template v-else>
         <AuthSessionBridge />
         <header
-            v-if="
-                route.path.startsWith('/dashboard') ||
-                route.path.startsWith('/settings')
-            "
+            v-if="route.path.startsWith('/dashboard') || route.path.startsWith('/settings')"
             class="border-b border-neutral-200 bg-white"
         >
-            <div
-                class="mx-auto flex max-w-5xl flex-wrap items-center gap-4 px-4 py-3"
-            >
+            <div class="mx-auto flex max-w-5xl flex-wrap items-center gap-4 px-4 py-3">
                 <nav aria-label="Main" class="flex gap-4 text-sm">
                     <a href="/dashboard">Dashboard</a>
                     <a href="/settings/profile">Settings</a>
                 </nav>
-                <div
-                    v-if="auth.user"
-                    class="ml-auto flex items-center gap-3 text-sm"
-                >
+                <div v-if="auth.user" class="ml-auto flex items-center gap-3 text-sm">
                     <span>{{ auth.user.name }}</span>
                     <button type="button" @click="handleLogout">Log out</button>
                 </div>

@@ -20,10 +20,7 @@ if (process.env.VITEST) {
  * Node's incomplete Web Storage for the test worker so jsdom can own localStorage.
  */
 function vitestNodeExecArgv(): string[] {
-    const major = Number.parseInt(
-        process.versions.node.split('.')[0] ?? '0',
-        10,
-    );
+    const major = Number.parseInt(process.versions.node.split('.')[0] ?? '0', 10);
 
     return major >= 25 ? ['--no-webstorage'] : [];
 }
@@ -46,6 +43,11 @@ export default defineConfig({
         }),
     ]),
     test: {
+        // Vitest v4 compatibility: preserve mock call history.
+        // Remove after tests no longer rely on calls from setup or earlier tests.
+        // https://viteplus.dev/guide/vitest-v5#remove-unneeded-compatibility-settings
+        // https://vitest.dev/guide/migration/#clearmocks-is-enabled-by-default
+        clearMocks: false,
         environment: 'jsdom',
         execArgv: vitestNodeExecArgv(),
         setupFiles: ['resources/js/tests/helpers/setup.ts'],
@@ -76,7 +78,7 @@ export default defineConfig({
         },
     },
     fmt: {
-        printWidth: 80,
+        printWidth: 100,
         tabWidth: 4,
         singleQuote: true,
         semi: true,

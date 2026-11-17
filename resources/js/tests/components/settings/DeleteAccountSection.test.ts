@@ -1,5 +1,5 @@
 import { flushPromises, mount } from '@vue/test-utils';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vite-plus/test';
 import DeleteAccountSection from '@/components/settings/DeleteAccountSection.vue';
 
 const { deleteAccount } = vi.hoisted(() => ({ deleteAccount: vi.fn() }));
@@ -29,9 +29,7 @@ describe('DeleteAccountSection', () => {
         expect(deleteAccount).not.toHaveBeenCalled();
 
         await wrapper.find('#delete-password').setValue('password');
-        const submission = wrapper
-            .find('[role="dialog"] form')
-            .trigger('submit');
+        const submission = wrapper.find('[role="dialog"] form').trigger('submit');
         await Promise.resolve();
 
         expect(deleteAccount).toHaveBeenCalledWith({ password: 'password' });

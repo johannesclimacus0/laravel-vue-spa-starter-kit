@@ -21,9 +21,7 @@ import AuthSubmitButton from '@/components/auth/AuthSubmitButton.vue';
                     readonly
                     class="block w-full"
                     :aria-invalid="Boolean(props.form.errors.email)"
-                    :aria-describedby="
-                        fieldDescribedBy('email', props.form.errors)
-                    "
+                    :aria-describedby="fieldDescribedBy('email', props.form.errors)"
                     :disabled="props.form.processing"
                 />
                 <p
@@ -48,9 +46,7 @@ import AuthSubmitButton from '@/components/auth/AuthSubmitButton.vue';
                     autofocus
                     placeholder="Password"
                     :aria-invalid="Boolean(props.form.errors.password)"
-                    :aria-describedby="
-                        fieldDescribedBy('password', props.form.errors)
-                    "
+                    :aria-describedby="fieldDescribedBy('password', props.form.errors)"
                     :disabled="props.form.processing"
                 />
                 <p
@@ -73,15 +69,8 @@ import AuthSubmitButton from '@/components/auth/AuthSubmitButton.vue';
                     autocomplete="new-password"
                     class="block w-full"
                     placeholder="Confirm password"
-                    :aria-invalid="
-                        Boolean(props.form.errors.password_confirmation)
-                    "
-                    :aria-describedby="
-                        fieldDescribedBy(
-                            'password_confirmation',
-                            props.form.errors,
-                        )
-                    "
+                    :aria-invalid="Boolean(props.form.errors.password_confirmation)"
+                    :aria-describedby="fieldDescribedBy('password_confirmation', props.form.errors)"
                     :disabled="props.form.processing"
                 />
                 <p

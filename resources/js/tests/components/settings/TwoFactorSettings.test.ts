@@ -1,6 +1,6 @@
 import { flushPromises, mount } from '@vue/test-utils';
 import { createMemoryHistory, createRouter } from 'vue-router';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vite-plus/test';
 import TwoFactorSettings from '@/components/settings/TwoFactorSettings.vue';
 import type { SecuritySettings } from '@/types/settings/security';
 

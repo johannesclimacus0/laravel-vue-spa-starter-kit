@@ -46,8 +46,7 @@ export function useTwoFactorAuth(): UseTwoFactorAuthReturn {
 
     const fetchSetupKey = async (): Promise<void> => {
         try {
-            const { secretKey } =
-                await twoFactorService.fetchTwoFactorSecretKey();
+            const { secretKey } = await twoFactorService.fetchTwoFactorSecretKey();
 
             manualSetupKey.value = secretKey;
         } catch {
@@ -59,8 +58,7 @@ export function useTwoFactorAuth(): UseTwoFactorAuthReturn {
     const fetchRecoveryCodes = async (): Promise<void> => {
         try {
             clearErrors();
-            recoveryCodesList.value =
-                await twoFactorService.fetchRecoveryCodes();
+            recoveryCodesList.value = await twoFactorService.fetchRecoveryCodes();
         } catch {
             errors.value = [...errors.value, 'Failed to fetch recovery codes'];
             recoveryCodesList.value = [];

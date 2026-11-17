@@ -13,9 +13,7 @@ const successMessage = ref<string | null>(null);
 const controller = new AbortController();
 const timezones = [
     'UTC',
-    ...Intl.supportedValuesOf('timeZone').filter(
-        (timezone) => timezone !== 'UTC',
-    ),
+    ...Intl.supportedValuesOf('timeZone').filter((timezone) => timezone !== 'UTC'),
 ];
 
 async function saveTimezone(): Promise<void> {
@@ -55,11 +53,7 @@ onUnmounted(() => controller.abort());
 <template>
     <section>
         <h2 class="text-lg font-semibold">Appearance</h2>
-        <p
-            v-if="phase === 'loading'"
-            class="mt-2 text-sm text-neutral-600"
-            aria-live="polite"
-        >
+        <p v-if="phase === 'loading'" class="mt-2 text-sm text-neutral-600" aria-live="polite">
             Loading preferences…
         </p>
         <FormFieldError
@@ -67,25 +61,15 @@ onUnmounted(() => controller.abort());
             class="mt-2"
             :message="errorMessage"
         />
-        <form
-            v-else-if="phase === 'ready'"
-            class="mt-4 space-y-3"
-            @submit.prevent="saveTimezone"
-        >
-            <label for="timezone" class="block text-sm font-medium">
-                Time zone
-            </label>
+        <form v-else-if="phase === 'ready'" class="mt-4 space-y-3" @submit.prevent="saveTimezone">
+            <label for="timezone" class="block text-sm font-medium"> Time zone </label>
             <select
                 id="timezone"
                 v-model="selectedTimezone"
                 class="w-full rounded border border-neutral-300 bg-white px-3 py-2 text-sm"
                 @change="successMessage = null"
             >
-                <option
-                    v-for="timezone in timezones"
-                    :key="timezone"
-                    :value="timezone"
-                >
+                <option v-for="timezone in timezones" :key="timezone" :value="timezone">
                     {{ timezone }}
                 </option>
             </select>
@@ -100,10 +84,7 @@ onUnmounted(() => controller.abort());
                 {{ preferencesStore.isSaving ? 'Saving…' : 'Save time zone' }}
             </button>
             <FormFieldError v-if="errorMessage" :message="errorMessage" />
-            <FormStatusMessage
-                v-if="successMessage"
-                :message="successMessage"
-            />
+            <FormStatusMessage v-if="successMessage" :message="successMessage" />
         </form>
     </section>
 </template>

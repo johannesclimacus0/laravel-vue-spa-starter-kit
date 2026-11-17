@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it } from 'vite-plus/test';
 import LoginForm from '@/components/auth/LoginForm.vue';
 import { useForm } from '@/composables/useForm';
 
@@ -30,8 +30,6 @@ describe('LoginForm', () => {
         const wrapper = mount(LoginForm, { props: { form } });
 
         expect(wrapper.find('#email-error').text()).toBe('Invalid email');
-        expect(
-            wrapper.find('[data-test="login-button"]').attributes('disabled'),
-        ).toBeDefined();
+        expect(wrapper.find('[data-test="login-button"]').attributes('disabled')).toBeDefined();
     });
 });

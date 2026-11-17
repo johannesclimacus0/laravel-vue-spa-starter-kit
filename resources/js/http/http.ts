@@ -14,9 +14,7 @@ let authSessionHandlersSuppressed = false;
  * Register SPA reactions for session-level auth HTTP statuses.
  * Keep this thin — navigation belongs to Vue Router owners.
  */
-export function configureAuthSessionHandlers(
-    handlers: AuthSessionHandlers,
-): void {
+export function configureAuthSessionHandlers(handlers: AuthSessionHandlers): void {
     authSessionHandlers = handlers;
 }
 
@@ -28,9 +26,7 @@ export function setAuthSessionHandlersSuppressed(suppressed: boolean): void {
     authSessionHandlersSuppressed = suppressed;
 }
 
-function isLaravelValidationBody(
-    data: unknown,
-): data is LaravelValidationErrorBody {
+function isLaravelValidationBody(data: unknown): data is LaravelValidationErrorBody {
     if (typeof data !== 'object' || data === null) {
         return false;
     }
@@ -66,9 +62,7 @@ function messageFromBody(data: unknown, fallback: string): string {
     return fallback;
 }
 
-export function isNormalizedApiError(
-    error: unknown,
-): error is NormalizedApiError {
+export function isNormalizedApiError(error: unknown): error is NormalizedApiError {
     return (
         typeof error === 'object' &&
         error !== null &&
@@ -131,10 +125,7 @@ export function normalizeApiError(error: unknown): NormalizedApiError {
         return {
             kind: 'unauthenticated',
             status,
-            message: messageFromBody(
-                data,
-                'These credentials do not match our records.',
-            ),
+            message: messageFromBody(data, 'These credentials do not match our records.'),
             errors: {},
         };
     }
@@ -152,10 +143,7 @@ export function normalizeApiError(error: unknown): NormalizedApiError {
         return {
             kind: 'not_found',
             status,
-            message: messageFromBody(
-                data,
-                'The requested resource was not found.',
-            ),
+            message: messageFromBody(data, 'The requested resource was not found.'),
             errors: {},
         };
     }
@@ -173,10 +161,7 @@ export function normalizeApiError(error: unknown): NormalizedApiError {
         return {
             kind: 'password_confirmation',
             status,
-            message: messageFromBody(
-                data,
-                'Please confirm your password before continuing.',
-            ),
+            message: messageFromBody(data, 'Please confirm your password before continuing.'),
             errors: {},
         };
     }
@@ -185,10 +170,7 @@ export function normalizeApiError(error: unknown): NormalizedApiError {
         return {
             kind: 'throttled',
             status,
-            message: messageFromBody(
-                data,
-                'Too many attempts. Please wait before trying again.',
-            ),
+            message: messageFromBody(data, 'Too many attempts. Please wait before trying again.'),
             errors: {},
         };
     }

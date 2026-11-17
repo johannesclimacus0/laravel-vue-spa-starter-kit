@@ -61,10 +61,7 @@ import ResetPasswordForm from '@/components/auth/ResetPasswordForm.vue';
 </script>
 
 <template>
-    <AuthPageLayout
-        title="Reset password"
-        description="Please enter your new password below"
-    >
+    <AuthPageLayout title="Reset password" description="Please enter your new password below">
         <ResetPasswordForm :form="form" @submit="onSubmit" />
     </AuthPageLayout>
 </template>
