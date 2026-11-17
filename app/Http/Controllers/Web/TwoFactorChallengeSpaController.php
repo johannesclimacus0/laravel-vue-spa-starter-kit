@@ -17,7 +17,7 @@ class TwoFactorChallengeSpaController extends Controller
         if (! $request->hasChallengedUser()) {
             return redirect()->route('login');
         }
-        
+
         return view('app');
     }
 }

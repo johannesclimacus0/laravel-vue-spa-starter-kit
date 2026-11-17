@@ -3,11 +3,28 @@ set -euo pipefail
 
 cd "$(git rev-parse --show-toplevel)"
 
+echo "checking working tree:"
+
+if [[ -n "$(git status --porcelain)" ]]; then
+    echo "push blocked: commit or discard changes first"
+    git status --short
+    exit 1
+fi
+
 echo "fixing php formatting:"
-composer lint:check
+composer lint
 
 echo "fixing frontend formatting:"
-npm run check
+npm run check:fix
+
+echo "checking formatting changes:"
+
+if [[ -n "$(git status --porcelain)" ]]; then
+    echo ""
+    echo "review and commit the changes, then push again"
+    git status --short
+    exit 1
+fi
 
 echo "validating composer:"
 composer validate --strict
@@ -22,11 +39,10 @@ echo "auditing dependencies:"
 composer audit --locked
 npm audit --omit=dev
 
-echo "checking for uncommitted changes:"
+echo "checking final working tree:"
 
-if ! git diff --quiet || ! git diff --cached --quiet; then
-    echo ""
-    echo "review and commit the changes before pushing"
+if [[ -n "$(git status --porcelain)" ]]; then
+    echo "checks generated uncommitted changes"
     git status --short
     exit 1
 fi
