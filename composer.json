@@ -33,6 +33,7 @@
     },
     "require-dev": {
         "fakerphp/faker": "^1.24",
+        "johannesclimacus/laravel-tui": "@alpha",
         "larastan/larastan": "^3.9",
         "laravel/boost": "^2.2",
         "laravel/pail": "^1.2.5",

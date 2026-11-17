@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d5e95b3d9eb44c7481c4233e96f143de",
+    "content-hash": "67c632bb6555eafa115ec8eff02085e9",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -9490,6 +9490,78 @@
             "time": "2025-03-19T14:43:43+00:00"
         },
         {
+            "name": "johannesclimacus/laravel-tui",
+            "version": "v0.1.0-alpha.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/johannesclimacus0/laravel-tui.git",
+                "reference": "ab537400c913341a103f388ea8109afe576e46fe"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/johannesclimacus0/laravel-tui/zipball/ab537400c913341a103f388ea8109afe576e46fe",
+                "reference": "ab537400c913341a103f388ea8109afe576e46fe",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^12.0||^13.0",
+                "php": "^8.4.1",
+                "symfony/process": "^7.4 || ^8.0",
+                "symfony/tui": "^8.1.10"
+            },
+            "require-dev": {
+                "larastan/larastan": "^3.9",
+                "laravel/pao": "^1.0",
+                "laravel/pint": "^1.29",
+                "orchestra/testbench": "^10.0||^11.0",
+                "pestphp/pest": "^4.6||^5.0",
+                "pestphp/pest-plugin-laravel": "^4.1||^5.0",
+                "pestphp/pest-plugin-type-coverage": "^4.0||^5.0",
+                "phpstan/extension-installer": "^1.4"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "LaravelTui\\LaravelTui\\LaravelTuiServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "LaravelTui\\LaravelTui\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "johannesclimacus",
+                    "email": "dhdhfgffifid@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "TUI for Laravel",
+            "homepage": "https://github.com/johannesclimacus0/laravel-tui",
+            "keywords": [
+                "dashboard",
+                "hatsune-miku",
+                "johannesclimacus",
+                "laravel",
+                "laravel-tui",
+                "miku",
+                "terminal",
+                "tui"
+            ],
+            "support": {
+                "issues": "https://github.com/johannesclimacus0/laravel-tui/issues",
+                "source": "https://github.com/johannesclimacus0/laravel-tui/tree/v0.1.0-alpha.2"
+            },
+            "time": "2026-11-08T03:52:58+00:00"
+        },
+        {
             "name": "larastan/larastan",
             "version": "v3.12.1",
             "source": {
@@ -11460,6 +11532,78 @@
             "time": "2026-07-28T13:58:09+00:00"
         },
         {
+            "name": "revolt/event-loop",
+            "version": "v1.0.9",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/revoltphp/event-loop.git",
+                "reference": "44061cf513e53c6200372fc935ac42271566295d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/revoltphp/event-loop/zipball/44061cf513e53c6200372fc935ac42271566295d",
+                "reference": "44061cf513e53c6200372fc935ac42271566295d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1"
+            },
+            "require-dev": {
+                "ext-json": "*",
+                "jetbrains/phpstorm-stubs": "^2019.3",
+                "phpunit/phpunit": "^9",
+                "psalm/phar": "6.16.*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Revolt\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Aaron Piotrowski",
+                    "email": "aaron@trowski.com"
+                },
+                {
+                    "name": "Cees-Jan Kiewiet",
+                    "email": "ceesjank@gmail.com"
+                },
+                {
+                    "name": "Christian Lück",
+                    "email": "christian@clue.engineering"
+                },
+                {
+                    "name": "Niklas Keller",
+                    "email": "me@kelunik.com"
+                }
+            ],
+            "description": "Rock-solid event loop for concurrent PHP applications.",
+            "keywords": [
+                "async",
+                "asynchronous",
+                "concurrency",
+                "event",
+                "event-loop",
+                "non-blocking",
+                "scheduler"
+            ],
+            "support": {
+                "issues": "https://github.com/revoltphp/event-loop/issues",
+                "source": "https://github.com/revoltphp/event-loop/tree/v1.0.9"
+            },
+            "time": "2026-05-16T17:55:38+00:00"
+        },
+        {
             "name": "sebastian/cli-parser",
             "version": "4.2.1",
             "source": {
@@ -12433,6 +12577,85 @@
             "time": "2024-10-20T05:08:20+00:00"
         },
         {
+            "name": "symfony/tui",
+            "version": "v8.1.11",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/tui.git",
+                "reference": "92cc5502af762d58e7a1b576de8adc88a6c0a1ef"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/tui/zipball/92cc5502af762d58e7a1b576de8adc88a6c0a1ef",
+                "reference": "92cc5502af762d58e7a1b576de8adc88a6c0a1ef",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.4.1",
+                "revolt/event-loop": "^1.0",
+                "symfony/event-dispatcher": "^8.0",
+                "symfony/polyfill-intl-grapheme": "^1.42.1",
+                "symfony/string": "^8.1.9"
+            },
+            "require-dev": {
+                "league/commonmark": "^2.9",
+                "tempest/highlight": "^2.16"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Tui\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Provides a terminal UI framework for building rich, interactive CLI applications in PHP",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "cli",
+                "console",
+                "terminal",
+                "tui"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/tui/tree/v8.1.11"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/nicolas-grekas",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2026-11-03T10:49:33+00:00"
+        },
+        {
             "name": "symfony/yaml",
             "version": "v8.1.11",
             "source": {
@@ -12620,7 +12843,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": {
+        "johannesclimacus/laravel-tui": 15
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
