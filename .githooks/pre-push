@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+cd "$(git rev-parse --show-toplevel)"
+
+echo "fixing php formatting:"
+composer lint
+
+echo "fixing frontend formatting:"
+npm run check:fix
+
+echo "validating composer:"
+composer validate --strict
+
+echo "building frontend:"
+npm run build
+
+echo "running project checks:"
+composer ci:check
+
+echo "auditing dependencies:"
+composer audit --locked
+npm audit --omit=dev
+
+echo "checking for uncommitted changes:"
+
+if ! git diff --quiet || ! git diff --cached --quiet; then
+    echo ""
+    echo "review and commit the changes before pushing"
+    git status --short
+    exit 1
+fi
+
+echo ""
+echo "checks passed"
