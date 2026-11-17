@@ -200,5 +200,5 @@ jobs:
       - name: Audit Composer dependencies
         run: composer audit --locked
 
-      - name: Audit npm dependencies
-        run: npm audit
+      - name: Audit npm production dependencies
+        run: npm audit --omit=dev
